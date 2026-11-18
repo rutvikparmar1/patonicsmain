@@ -20,13 +20,13 @@ const MODES = [
   {
     icon: ContainerShipIcon,
     title: "Ocean freight",
-    text: "FCL and LCL on the lanes shown above — westbound through Suez, into the Gulf through Hormuz, eastbound through Malacca.",
+    text: "FCL and LCL on the lanes above: westbound through Suez, into the Gulf through Hormuz, eastbound through Malacca.",
     meta: "10 markets · FCL / LCL",
   },
   {
     icon: CargoPlaneIcon,
     title: "Air freight",
-    text: "Fruit, vegetables and cut flowers will not keep for a sea crossing, so they fly. Airside within hours of harvest.",
+    text: "Fruit, vegetables and cut flowers will not keep for a sea crossing, so they go by air instead.",
     meta: "Perishables · direct",
   },
 ] as const;
@@ -60,14 +60,14 @@ export function GlobalReach() {
       <div className="container-site">
         <div className="grid items-end gap-10 lg:grid-cols-12">
           <Reveal className="lg:col-span-7">
-            <Eyebrow>Indian Products. International Connections.</Eyebrow>
+            <Eyebrow>Export Markets</Eyebrow>
             <h2 id="reach-title" className="headline-section mt-5 text-ink">
-              Ten markets. <span className="text-brand-green-deep">Four continents.</span>
+              Where our containers go
             </h2>
             <p className="mt-5 max-w-xl text-[1.05rem] leading-relaxed text-muted-foreground">
-              Every line on this map is the route a container actually takes out of Gujarat — west
-              through the Red Sea and Suez, into the Gulf through Hormuz, east through the Strait of
-              Malacca.
+              Ten markets across four continents. Each line is the route a container takes out of
+              Gujarat: west through the Red Sea and Suez, into the Gulf through Hormuz, east through
+              the Strait of Malacca.
             </p>
           </Reveal>
 
@@ -304,8 +304,8 @@ export function GlobalReach() {
           className="mt-12 flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:justify-between"
         >
           <p className="max-w-xl text-sm leading-relaxed text-muted-foreground">
-            Tell us the destination port and we will come back with the lane, the transit time and
-            the landed cost.
+            Give us your destination port and we will quote the lane, the transit time and the
+            landed cost.
           </p>
           <Button asChild variant="brand" size="xl" className="shrink-0">
             <a href="#contact">

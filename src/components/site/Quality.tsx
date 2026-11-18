@@ -38,14 +38,9 @@ export function Quality() {
           <Reveal>
             <SectionHeading
               id="quality-title"
-              eyebrow="Our Commitment to Quality"
-              title={
-                <>
-                  Quality you can build{" "}
-                  <span className="text-brand-green-deep">your business on.</span>
-                </>
-              }
-              description="Our quality management system is certified to ISO 9001:2015. In practice that means a lot is measured against agreed parameters before it is committed, not after it lands."
+              eyebrow="Quality"
+              title="How we check a lot"
+              description="Our quality management system is certified to ISO 9001:2015. The parameters below are agreed with you in writing, and the lot is measured against them before we commit it."
             />
           </Reveal>
 

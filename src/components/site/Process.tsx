@@ -10,13 +10,9 @@ export function Process() {
           <SectionHeading
             id="process-title"
             align="center"
-            eyebrow="From Field to Port"
-            title={
-              <>
-                How an order actually <span className="text-brand-green-deep">moves.</span>
-              </>
-            }
-            description="No step is left to assumption. Every consignment follows the same route from the growing region to your port of discharge."
+            eyebrow="Process"
+            title="From the growing region to your port"
+            description="Every consignment goes through the same six stages, whatever the commodity."
           />
         </Reveal>
 

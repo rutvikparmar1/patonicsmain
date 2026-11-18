@@ -16,16 +16,7 @@ export function Faq() {
       <div className="container-site grid gap-14 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-4">
           <Reveal>
-            <SectionHeading
-              id="faq-title"
-              eyebrow="Buyer Questions"
-              title={
-                <>
-                  The questions we get{" "}
-                  <span className="text-brand-green-deep">before the first order.</span>
-                </>
-              }
-            />
+            <SectionHeading id="faq-title" eyebrow="FAQ" title="Questions buyers ask" />
           </Reveal>
 
           <Reveal delay={90}>
@@ -37,8 +28,7 @@ export function Faq() {
               />
               <p className="mt-4 font-display text-lg font-semibold text-ink">Not covered here?</p>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                Commercial terms are confirmed per enquiry rather than published, so ask us directly
-                and you will get a specific answer.
+                We quote commercial terms per enquiry rather than publishing them, so call and ask.
               </p>
               <Button asChild variant="brandOutline" className="mt-6 h-11 w-full px-5">
                 <a href={telHref(CONTACT.phones[0] ?? "")}>Call {CONTACT.phones[0]}</a>

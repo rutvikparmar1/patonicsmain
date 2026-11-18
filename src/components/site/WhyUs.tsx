@@ -5,33 +5,33 @@ import { SectionHeading } from "./SectionHeading";
 const FEATURES = [
   {
     icon: Landmark,
-    title: "Legacy & experience",
-    text: "A trading business that began in 1983, with roots in India's agricultural and manufacturing ecosystem rather than in a broker's office.",
+    title: "Since 1983",
+    text: "The business started in 1983 and has worked in Indian agriculture and manufacturing ever since.",
   },
   {
     icon: ShieldCheck,
-    title: "Quality commitment",
-    text: "A quality management system certified to ISO 9001:2015, with grading and inspection built into sourcing rather than bolted on at the end.",
+    title: "ISO 9001:2015",
+    text: "A certified quality management system. Grading and inspection happen at sourcing, before a lot is committed.",
   },
   {
     icon: Layers,
-    title: "Diverse portfolio",
-    text: "Eleven agri categories plus ceramics, textiles and packaging, so one relationship can cover more of your sourcing list.",
+    title: "Wide range",
+    text: "Eleven agri categories plus ceramics, textiles and packaging, so one supplier covers more of your list.",
   },
   {
     icon: Sprout,
-    title: "Direct to the grower",
-    text: "Long-standing relationships in the growing regions and mandis we buy from, including training work with farmers and ginners.",
+    title: "We buy at source",
+    text: "We buy in the growing regions and mandis we have worked in for years. Our founder has run training sessions for farmers and ginners.",
   },
   {
     icon: Ship,
-    title: "Port proximity",
-    text: "Based in Gujarat, within reach of Mundra and Kandla, which shortens the road leg and the loading window.",
+    title: "Close to the ports",
+    text: "Based in Gujarat, within reach of Mundra and Kandla. Shorter road leg, shorter loading window.",
   },
   {
     icon: Handshake,
-    title: "Partnerships, not one-offs",
-    text: "We would rather quote honestly and keep you for ten years than win a single container on a promise we cannot hold.",
+    title: "Repeat buyers",
+    text: "Most of our volume goes to buyers we have shipped to before.",
   },
 ] as const;
 
@@ -53,13 +53,9 @@ export function WhyUs() {
           <SectionHeading
             invert
             id="why-title"
-            eyebrow="The Patonics Advantage"
-            title={
-              <>
-                Built on trust. <span className="text-brand-green">Driven by quality.</span>
-              </>
-            }
-            description="Successful international trade starts with dependable relationships, clear communication, and a quote you can hold us to."
+            eyebrow="Why Patonics"
+            title="Why buyers stay with us"
+            description="Most of our business is repeat business. These are the reasons buyers give us for coming back."
           />
         </Reveal>
 

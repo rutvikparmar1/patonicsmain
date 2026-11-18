@@ -55,18 +55,17 @@ export function About() {
           {/* Story */}
           <div className="lg:col-span-6">
             <Reveal>
-              <Eyebrow>About Patonics International</Eyebrow>
+              <Eyebrow>About</Eyebrow>
               <h2 id="about-title" className="headline-section mt-5 text-ink">
-                Four decades of trust.{" "}
-                <span className="text-brand-green-deep">One global vision.</span>
+                Trading out of Gujarat since 1983
               </h2>
             </Reveal>
 
             <Reveal delay={80}>
               <p className="mt-7 text-lg leading-relaxed text-ink/80">
-                Rooted in India's agricultural heritage, Patonics International connects quality
-                Indian products with businesses across the world. Our foundation is long-standing
-                relationships, dependable sourcing, and a working knowledge of international trade.
+                We supply Indian agricultural commodities and manufactured goods to buyers in ten
+                markets. The business runs on the sourcing relationships it has built in Gujarat
+                over four decades.
               </p>
               <div className="mt-6 space-y-4 text-[0.98rem] leading-relaxed text-muted-foreground">
                 <p>
@@ -76,9 +75,9 @@ export function About() {
                   22 January 2023 by Mr. Nikunj Patel.
                 </p>
                 <p>
-                  Our team brings hands-on experience across agricultural sourcing, farming,
-                  ginning, spinning, sortex cleaning, ceramics and paper, which is why our portfolio
-                  reaches well beyond a single commodity.
+                  The team has worked directly in agricultural sourcing, farming, ginning, spinning,
+                  sortex cleaning, ceramics and paper. That is why the range runs wider than one
+                  commodity.
                 </p>
               </div>
             </Reveal>
@@ -90,7 +89,7 @@ export function About() {
                   Passion for quality, dedication to customers.
                 </p>
                 <footer className="mt-3 text-xs text-muted-foreground">
-                  The principle the firm has traded on since 1983
+                  Company tagline, in use since 1983
                 </footer>
               </blockquote>
             </Reveal>

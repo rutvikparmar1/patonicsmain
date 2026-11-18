@@ -9,13 +9,9 @@ export function Leadership() {
         <Reveal>
           <SectionHeading
             id="leadership-title"
-            eyebrow="The People Behind It"
-            title={
-              <>
-                You will be dealing with <span className="text-brand-green-deep">these two.</span>
-              </>
-            }
-            description="A small firm, deliberately. Your enquiry reaches the people who decide what we buy and what we will stand behind."
+            eyebrow="Team"
+            title="Who you deal with"
+            description="The firm is small, so your enquiry reaches the people who decide what gets bought and what gets shipped."
           />
         </Reveal>
 

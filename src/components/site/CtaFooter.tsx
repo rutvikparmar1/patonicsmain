@@ -17,15 +17,14 @@ export function CtaBanner() {
       <Reveal className="container-site relative text-center">
         <p className="eyebrow flex items-center justify-center gap-3 text-brand-green">
           <span className="h-px w-10 bg-gold" aria-hidden />
-          Ready When You Are
+          Enquiries
         </p>
         <h2 id="cta-title" className="headline-display mx-auto mt-7 max-w-4xl text-white">
-          Looking for a reliable{" "}
-          <span className="underline-brand text-brand-green">export partner</span>?
+          Tell us what you need
         </h2>
         <p className="mx-auto mt-7 max-w-2xl text-[1.05rem] leading-relaxed text-white/60">
-          Tell us what your business needs. We will tell you straight away whether we are the right
-          people to supply it.
+          Send the product, quantity and destination port. We will say whether we can supply it and
+          at what price.
         </p>
         <div className="mt-11 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <Button asChild variant="onInk" size="2xl">

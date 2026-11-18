@@ -21,14 +21,9 @@ export function Products() {
           <Reveal>
             <SectionHeading
               id="products-title"
-              eyebrow="Our Product Portfolio"
-              title={
-                <>
-                  Eleven categories.{" "}
-                  <span className="text-brand-green-deep">One point of contact.</span>
-                </>
-              }
-              description="Sourced from the regions that grow them best, graded to your specification, and consolidated into a single shipment where it makes sense."
+              eyebrow="Products"
+              title="Eleven agri categories"
+              description="Bought in the growing regions, graded to the specification you agree with us, and consolidated into one shipment where the volumes allow it."
             />
           </Reveal>
 
@@ -135,8 +130,8 @@ export function Products() {
                   Looking for something not listed?
                 </p>
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                  Tell us the product, grade, quantity and destination port. If we can source it
-                  well, we will quote it. If we cannot, we will say so.
+                  Send the product, grade, quantity and destination port, and we will come back with
+                  a price or tell you we cannot source it.
                 </p>
               </div>
               <Button asChild variant="brand" size="xl" className="w-full">

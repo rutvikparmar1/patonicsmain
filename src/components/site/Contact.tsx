@@ -83,13 +83,13 @@ export function Contact() {
       <div className="container-site grid gap-14 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-5">
           <Reveal>
-            <Eyebrow>Contact Us</Eyebrow>
+            <Eyebrow>Contact</Eyebrow>
             <h2 id="contact-title" className="headline-section mt-5 text-ink">
-              Let's build a <span className="text-brand-green-deep">global partnership.</span>
+              Send us an enquiry
             </h2>
             <p className="mt-5 text-[1.05rem] leading-relaxed text-muted-foreground">
-              Share the product, grade, quantity and destination port. Our trade desk will come back
-              with what is workable and what it would cost.
+              Give us the product, grade, quantity and destination port. Our trade desk will reply
+              with what we can do and what it costs.
             </p>
           </Reveal>
 

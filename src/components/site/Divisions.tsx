@@ -19,14 +19,9 @@ export function Divisions() {
         <Reveal>
           <SectionHeading
             id="divisions-title"
-            eyebrow="Five Business Divisions"
-            title={
-              <>
-                More than a commodity trader.{" "}
-                <span className="text-brand-green-deep">A sourcing partner.</span>
-              </>
-            }
-            description="Patonics International was set up to supply agricultural commodities, agro-processed products, ceramics, textiles, and paper and packaging. Each division draws on decades of direct experience in that industry."
+            eyebrow="Divisions"
+            title="What we supply"
+            description="Agricultural commodities are the bulk of what we ship. The company was also set up to supply ceramics, textiles, and paper and packaging, and the team has worked inside each of those industries."
           />
         </Reveal>
 

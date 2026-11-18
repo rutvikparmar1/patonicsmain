@@ -87,8 +87,16 @@
   --color-gold: var(--gold);
   --color-gold-deep: var(--gold-deep);
 
-  --font-display: "Fraunces", ui-serif, Georgia, serif;
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  /*
+   * One industrial family, not a display serif. A high-contrast serif plus a
+   * geometric sans is the house style of generated marketing pages; IBM Plex
+   * was drawn for an engineering company and reads like trade documentation,
+   * which is what this business actually is. Mono carries the eyebrows,
+   * figures and lane codes the way a packing list would.
+   */
+  --font-display: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
 
   --shadow-soft:
     0 1px 2px oklch(0.175 0.018 155 / 0.04), 0 8px 24px -12px oklch(0.175 0.018 155 / 0.12);
@@ -174,11 +182,12 @@
   }
 }
 
+/* Mono, like a reference code on a shipping document. */
 @utility eyebrow {
-  font-family: var(--font-sans);
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.2em;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
@@ -191,17 +200,17 @@
  */
 @utility headline-display {
   font-family: var(--font-display);
-  font-size: clamp(2.5rem, 1.6rem + 4vw, 5rem);
-  line-height: 1.02;
-  letter-spacing: -0.03em;
+  font-size: clamp(2.3rem, 1.5rem + 3.5vw, 4.3rem);
+  line-height: 1.06;
+  letter-spacing: -0.032em;
   font-weight: 600;
 }
 
 @utility headline-section {
   font-family: var(--font-display);
-  font-size: clamp(1.9rem, 1.35rem + 2.2vw, 3.1rem);
-  line-height: 1.08;
-  letter-spacing: -0.025em;
+  font-size: clamp(1.75rem, 1.3rem + 1.9vw, 2.65rem);
+  line-height: 1.14;
+  letter-spacing: -0.022em;
   font-weight: 600;
 }
 
@@ -342,17 +351,14 @@
   h3,
   h4 {
     font-family: var(--font-display);
-    font-optical-sizing: auto;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.018em;
     font-weight: 600;
   }
 
-  /* Fraunces ships a soft/wonk axis; a touch of each warms the headlines. */
-  h1,
-  h2 {
-    font-variation-settings:
-      "SOFT" 20,
-      "WONK" 1;
+  /* Figures line up in the stat band, the lane list and the map. */
+  .tabular-nums,
+  .eyebrow {
+    font-variant-numeric: tabular-nums;
   }
 
   ::selection {
