@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { Mail, MessageCircle, Phone } from "lucide-react";
 import { CONTACT, telHref, waHref } from "@/lib/site-data";
 import { cn } from "@/lib/utils";
@@ -49,14 +50,14 @@ export function MobileActionBar() {
           <MessageCircle className="size-5 text-brand-green" aria-hidden />
           <span className="text-[0.7rem] font-semibold">WhatsApp</span>
         </a>
-        <a
-          href="#contact"
+        <Link
+          to="/contact"
           className="flex flex-col items-center gap-1.5 bg-brand-green-deep py-3.5 text-white transition-colors active:bg-brand-green-deep/85"
           tabIndex={shown ? 0 : -1}
         >
           <Mail className="size-5" aria-hidden />
           <span className="text-[0.7rem] font-semibold">Inquiry</span>
-        </a>
+        </Link>
       </div>
     </div>
   );

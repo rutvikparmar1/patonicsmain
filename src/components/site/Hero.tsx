@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { ArrowRight, MoveDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CREDENTIALS } from "@/lib/site-data";
@@ -52,16 +53,16 @@ export function Hero() {
 
           <div className="animate-rise mt-10 flex flex-col gap-3 [animation-delay:260ms] sm:flex-row">
             <Button asChild variant="onInk" size="2xl">
-              <a href="#products">
+              <Link to="/products">
                 Explore our products
                 <ArrowRight
                   className="transition-transform duration-300 group-hover:translate-x-1"
                   aria-hidden
                 />
-              </a>
+              </Link>
             </Button>
             <Button asChild variant="inkOutline" size="2xl">
-              <a href="#contact">Send an inquiry</a>
+              <Link to="/contact">Send an inquiry</Link>
             </Button>
           </div>
         </div>

@@ -4,14 +4,19 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
   type ErrorComponentProps,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { SiteHeader } from "@/components/site/SiteHeader";
+import { SiteFooter } from "@/components/site/CtaFooter";
+import { ScrollProgress } from "@/components/site/ScrollProgress";
+import { MobileActionBar } from "@/components/site/MobileActionBar";
 
 function NotFoundComponent() {
   return (
@@ -190,13 +195,49 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+/**
+ * The chrome every page shares. Keeping it here rather than in each route means
+ * the header, footer and progress bar are mounted once and survive navigation,
+ * so the sticky header does not rebuild between pages.
+ */
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const { pathname, status } = useRouterState({
+    select: (s) => ({ pathname: s.location.pathname, status: s.status }),
+  });
+
+  // After a route change, move focus to the main region, so a keyboard or
+  // screen-reader user is not left parked in the nav having to tab through it
+  // again on every page.
+  //
+  // Waits for `status === "idle"`: the pathname in router state changes when a
+  // navigation starts, and at that point the outgoing <main> has gone while the
+  // incoming one has not been committed, so the lookup finds nothing.
+  //
+  // The ref starts at the current path, so a fresh page load is skipped. There,
+  // focus belongs at the top of the document, or the skip link and the nav sit
+  // behind the user and can only be reached by shift-tabbing backwards.
+  const lastFocused = useRef(pathname);
+  useEffect(() => {
+    if (status !== "idle" || lastFocused.current === pathname) return;
+    lastFocused.current = pathname;
+    document.getElementById("main")?.focus({ preventScroll: true });
+  }, [pathname, status]);
 
   return (
     <QueryClientProvider client={queryClient}>
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-ink focus:px-5 focus:py-3 focus:text-sm focus:font-semibold focus:text-white focus:outline-none focus:ring-2 focus:ring-brand-green"
+      >
+        Skip to main content
+      </a>
+      <ScrollProgress />
+      <SiteHeader />
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
+      <SiteFooter />
+      <MobileActionBar />
     </QueryClientProvider>
   );
 }

@@ -18,7 +18,8 @@ import {
   Send,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { CATEGORIES, CONTACT, SELECT_CATEGORY_EVENT, telHref, waHref } from "@/lib/site-data";
+import { useSearch } from "@tanstack/react-router";
+import { CATEGORIES, CONTACT, telHref, waHref } from "@/lib/site-data";
 import {
   buildInquiryMailto,
   validateInquiry,
@@ -45,12 +46,21 @@ export function Contact() {
   const [status, setStatus] = useState<"idle" | "sending" | "handed-off">("idle");
   const formRef = useRef<HTMLFormElement>(null);
 
+  /*
+   * Arriving from a product card or the mega menu, the category rides in the
+   * URL as /contact?category=Spices. `strict: false` is deliberate: this form
+   * also renders on the home page, where that search param is not declared.
+   * The value is matched against the known list rather than trusted, so a
+   * hand-edited URL cannot inject text into the form.
+   */
+  const search = useSearch({ strict: false }) as { category?: string };
+  const preset = search.category;
+
   useEffect(() => {
-    const onSelect = (e: Event) =>
-      setForm((f) => ({ ...f, category: (e as CustomEvent<string>).detail }));
-    window.addEventListener(SELECT_CATEGORY_EVENT, onSelect);
-    return () => window.removeEventListener(SELECT_CATEGORY_EVENT, onSelect);
-  }, []);
+    if (!preset) return;
+    const known = CATEGORIES.find((c) => c.name === preset);
+    if (known) setForm((f) => ({ ...f, category: known.name }));
+  }, [preset]);
 
   const set = (k: keyof Inquiry) => (e: { target: { value: string } }) => {
     setForm((f) => ({ ...f, [k]: e.target.value }));

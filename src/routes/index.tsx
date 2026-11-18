@@ -1,6 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { SiteHeader } from "@/components/site/SiteHeader";
-import { ScrollProgress } from "@/components/site/ScrollProgress";
 import { Hero } from "@/components/site/Hero";
 import { TrustBar } from "@/components/site/TrustBar";
 import { About } from "@/components/site/About";
@@ -14,8 +12,7 @@ import { Quality } from "@/components/site/Quality";
 import { Leadership } from "@/components/site/Leadership";
 import { Faq } from "@/components/site/Faq";
 import { Contact } from "@/components/site/Contact";
-import { CtaBanner, SiteFooter } from "@/components/site/CtaFooter";
-import { MobileActionBar } from "@/components/site/MobileActionBar";
+import { CtaBanner } from "@/components/site/CtaFooter";
 import { FAQS } from "@/lib/site-data";
 
 /** Buyer questions, marked up so they can surface as rich results. */
@@ -57,27 +54,21 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <>
-      <ScrollProgress />
-      <SiteHeader />
-      <main>
-        <Hero />
-        <TrustBar />
-        <About />
-        <Stats />
-        <Divisions />
-        <Products />
-        <Process />
-        <WhyUs />
-        <GlobalReach />
-        <Quality />
-        <Leadership />
-        <Faq />
-        <Contact />
-        <CtaBanner />
-      </main>
-      <SiteFooter />
-      <MobileActionBar />
-    </>
+    <main id="main" tabIndex={-1} className="outline-none">
+      <Hero />
+      <TrustBar />
+      <About />
+      <Stats />
+      <Divisions />
+      <Products />
+      <Process />
+      <WhyUs />
+      <GlobalReach />
+      <Quality />
+      <Leadership />
+      <Faq />
+      <Contact />
+      <CtaBanner />
+    </main>
   );
 }

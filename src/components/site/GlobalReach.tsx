@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -308,13 +309,13 @@ export function GlobalReach() {
             landed cost.
           </p>
           <Button asChild variant="brand" size="xl" className="shrink-0">
-            <a href="#contact">
+            <Link to="/contact">
               Start a trade inquiry
               <ArrowRight
                 className="transition-transform duration-300 group-hover:translate-x-1"
                 aria-hidden
               />
-            </a>
+            </Link>
           </Button>
         </Reveal>
       </div>

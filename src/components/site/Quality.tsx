@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import {
   ArrowRight,
   BadgeCheck,
@@ -60,13 +61,13 @@ export function Quality() {
 
           <Reveal delay={150}>
             <Button asChild variant="brand" size="xl" className="mt-10">
-              <a href="#contact">
+              <Link to="/contact">
                 Request our certificate
                 <ArrowRight
                   className="transition-transform duration-300 group-hover:translate-x-1"
                   aria-hidden
                 />
-              </a>
+              </Link>
             </Button>
           </Reveal>
         </div>

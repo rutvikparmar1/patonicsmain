@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { ArrowRight, ArrowUp, Mail, MapPin, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CATEGORIES, CONTACT, DIVISIONS, NAV, telHref } from "@/lib/site-data";
@@ -28,13 +29,13 @@ export function CtaBanner() {
         </p>
         <div className="mt-11 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <Button asChild variant="onInk" size="2xl">
-            <a href="#contact">
+            <Link to="/contact">
               Send your inquiry
               <ArrowRight
                 className="transition-transform duration-300 group-hover:translate-x-1"
                 aria-hidden
               />
-            </a>
+            </Link>
           </Button>
           <Button asChild variant="inkOutline" size="2xl">
             <a href={telHref(CONTACT.phones[0] ?? "")}>
@@ -77,24 +78,24 @@ export function SiteFooter() {
         <FooterCol title="Quick Links" className="lg:col-span-2">
           {NAV.map((n) => (
             <li key={n.label}>
-              <a href={n.href} className={linkCls}>
+              <Link to={n.href} className={linkCls}>
                 {n.label}
-              </a>
+              </Link>
             </li>
           ))}
           <li>
-            <a href="#faq" className={linkCls}>
+            <Link to="/faq" className={linkCls}>
               Buyer FAQ
-            </a>
+            </Link>
           </li>
         </FooterCol>
 
         <FooterCol title="Divisions" className="lg:col-span-3">
           {DIVISIONS.map((d) => (
             <li key={d.id}>
-              <a href="#divisions" className={linkCls}>
+              <Link to="/divisions" className={linkCls}>
                 {d.name}
-              </a>
+              </Link>
             </li>
           ))}
         </FooterCol>
@@ -132,12 +133,13 @@ export function SiteFooter() {
           <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-2.5">
             {CATEGORIES.map((c) => (
               <li key={c.slug}>
-                <a
-                  href={`#product-${c.slug}`}
+                <Link
+                  to="/contact"
+                  search={{ category: c.name }}
                   className="text-[0.82rem] text-white/50 transition-colors hover:text-brand-green"
                 >
                   {c.name}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
@@ -151,7 +153,7 @@ export function SiteFooter() {
             © {new Date().getFullYear()} {CONTACT.company} All rights reserved.
           </p>
           <a
-            href="#top"
+            href="#main"
             className="inline-flex w-fit items-center gap-2 transition-colors hover:text-brand-green focus-visible:outline-none focus-visible:text-brand-green"
           >
             Back to top

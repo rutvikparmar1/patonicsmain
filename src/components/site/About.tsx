@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { ArrowRight, Quote } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { TIMELINE } from "@/lib/site-data";
@@ -96,13 +97,13 @@ export function About() {
 
             <Reveal delay={200}>
               <Button asChild variant="brand" size="xl" className="mt-9">
-                <a href="#divisions">
+                <Link to="/divisions">
                   See what we trade
                   <ArrowRight
                     className="transition-transform duration-300 group-hover:translate-x-1"
                     aria-hidden
                   />
-                </a>
+                </Link>
               </Button>
             </Reveal>
           </div>

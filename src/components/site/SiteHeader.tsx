@@ -1,26 +1,16 @@
 import { useEffect, useRef, useState } from "react";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { ArrowRight, ChevronDown, Mail, Menu, Phone, ShieldCheck, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { useActiveSection } from "@/lib/use-reveal";
-import {
-  CATEGORIES,
-  CONTACT,
-  DIVISIONS,
-  NAV,
-  SECTION_IDS,
-  selectCategory,
-  telHref,
-} from "@/lib/site-data";
-// Imported as a bundled asset rather than through the hosted-asset descriptor,
-// which only resolves on Lovable's infrastructure and 404s everywhere else.
+import { CATEGORIES, CONTACT, DIVISIONS, NAV, telHref } from "@/lib/site-data";
 import logo from "@/assets/patonics-logo.webp";
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [mega, setMega] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const active = useActiveSection(SECTION_IDS);
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
   const megaTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   useEffect(() => {
@@ -39,6 +29,13 @@ export function SiteHeader() {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
+
+  // Close both menus whenever the route changes, or they stay open over the
+  // page you just navigated to.
+  useEffect(() => {
+    setOpen(false);
+    setMega(false);
+  }, [pathname]);
 
   // Lock the page behind the mobile sheet so the body does not scroll under it.
   useEffect(() => {
@@ -109,8 +106,8 @@ export function SiteHeader() {
             scrolled ? "h-[68px]" : "h-[76px] lg:h-[88px]",
           )}
         >
-          <a
-            href="#top"
+          <Link
+            to="/"
             className="shrink-0 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             aria-label="Patonics International — home"
           >
@@ -119,29 +116,28 @@ export function SiteHeader() {
               alt="Patonics International"
               width={1024}
               height={292}
-              /* Three tiers of text in the lockup, so it needs height to stay legible. */
               className={cn(
                 "w-auto transition-[height] duration-300",
                 scrolled ? "h-10 lg:h-11" : "h-10 lg:h-14",
               )}
             />
-          </a>
+          </Link>
 
           <nav aria-label="Primary" className="hidden lg:block">
             <ul className="flex items-center gap-0.5">
               {NAV.map((item) => {
-                const id = item.href.replace("#", "");
-                const isActive = active === id;
-                const hasMega = id === "products";
+                const isActive =
+                  item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+                const hasMega = item.href === "/products";
                 return (
                   <li
                     key={item.label}
                     className="relative"
                     {...(hasMega ? { onMouseEnter: openMega, onMouseLeave: closeMega } : {})}
                   >
-                    <a
-                      href={item.href}
-                      aria-current={isActive ? "true" : undefined}
+                    <Link
+                      to={item.href}
+                      aria-current={isActive ? "page" : undefined}
                       aria-expanded={hasMega ? mega : undefined}
                       onFocus={hasMega ? openMega : undefined}
                       className={cn(
@@ -160,7 +156,7 @@ export function SiteHeader() {
                           aria-hidden
                         />
                       )}
-                    </a>
+                    </Link>
                   </li>
                 );
               })}
@@ -169,13 +165,13 @@ export function SiteHeader() {
 
           <div className="flex items-center gap-2">
             <Button asChild variant="brand" className="hidden h-11 px-5 sm:inline-flex">
-              <a href="#contact">
+              <Link to="/contact">
                 Send an Inquiry
                 <ArrowRight
                   className="transition-transform duration-300 group-hover:translate-x-1"
                   aria-hidden
                 />
-              </a>
+              </Link>
             </Button>
             <button
               type="button"
@@ -199,43 +195,40 @@ export function SiteHeader() {
         >
           <div className="container-site grid gap-10 py-9 lg:grid-cols-12">
             <div className="lg:col-span-7">
-              <p className="eyebrow text-[0.68rem] text-brand-green-deep">Agri Categories</p>
+              <p className="eyebrow text-[0.64rem] text-brand-green-deep">Agri Categories</p>
               <ul className="mt-5 grid grid-cols-3 gap-x-6 gap-y-1">
                 {CATEGORIES.map((c) => (
                   <li key={c.slug}>
-                    <a
-                      href="#contact"
-                      onClick={() => {
-                        setMega(false);
-                        selectCategory(c.name);
-                      }}
-                      className="group flex items-center justify-between gap-2 rounded-md py-1.5 text-sm text-ink/75 transition-colors hover:text-brand-green-deep focus-visible:outline-none focus-visible:text-brand-green-deep"
+                    <Link
+                      to="/contact"
+                      search={{ category: c.name }}
+                      className="group flex items-center justify-between gap-2 rounded-md py-1.5 text-sm text-ink/75 transition-colors hover:text-brand-green-deep focus-visible:text-brand-green-deep focus-visible:outline-none"
                     >
                       {c.name}
                       <ArrowRight
                         className="size-3.5 -translate-x-1 opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100"
                         aria-hidden
                       />
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
             </div>
             <div className="lg:col-span-5">
-              <p className="eyebrow text-[0.68rem] text-brand-green-deep">Business Divisions</p>
+              <p className="eyebrow text-[0.64rem] text-brand-green-deep">Business Divisions</p>
               <ul className="mt-5 space-y-1">
                 {DIVISIONS.map((d) => (
                   <li key={d.id}>
-                    <a
-                      href="#divisions"
-                      onClick={() => setMega(false)}
-                      className="block rounded-lg px-3 py-2 transition-colors hover:bg-surface focus-visible:outline-none focus-visible:bg-surface"
+                    <Link
+                      to="/divisions"
+                      hash={d.id}
+                      className="block rounded-lg px-3 py-2 transition-colors hover:bg-surface focus-visible:bg-surface focus-visible:outline-none"
                     >
                       <span className="block text-sm font-semibold text-ink">{d.name}</span>
                       <span className="mt-0.5 block text-xs text-muted-foreground">
                         {d.tagline}
                       </span>
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -254,40 +247,36 @@ export function SiteHeader() {
           <ul className="flex flex-col">
             {NAV.map((item) => (
               <li key={item.label} className="border-b border-sand-line/70 last:border-0">
-                <a
-                  href={item.href}
-                  onClick={() => setOpen(false)}
-                  className="flex items-center justify-between py-4 font-display text-lg font-semibold text-ink focus-visible:outline-none focus-visible:text-brand-green-deep"
+                <Link
+                  to={item.href}
+                  className="flex items-center justify-between py-4 font-display text-lg font-bold text-ink focus-visible:text-brand-green-deep focus-visible:outline-none"
                 >
                   {item.label}
                   <ArrowRight className="size-4 text-brand-green-deep" aria-hidden />
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
 
-          <p className="eyebrow mt-7 text-[0.68rem] text-muted-foreground">Categories</p>
+          <p className="eyebrow mt-7 text-[0.64rem] text-muted-foreground">Categories</p>
           <ul className="mt-3 flex flex-wrap gap-2">
             {CATEGORIES.map((c) => (
               <li key={c.slug}>
-                <a
-                  href="#contact"
-                  onClick={() => {
-                    setOpen(false);
-                    selectCategory(c.name);
-                  }}
+                <Link
+                  to="/contact"
+                  search={{ category: c.name }}
                   className="inline-flex rounded-full border border-sand-line bg-surface px-3 py-1.5 text-xs font-medium text-ink/75"
                 >
                   {c.name}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
 
           <Button asChild variant="brand" size="xl" className="mt-7 w-full">
-            <a href="#contact" onClick={() => setOpen(false)}>
+            <Link to="/contact">
               Send an Inquiry <ArrowRight aria-hidden />
-            </a>
+            </Link>
           </Button>
 
           <div className="mt-6 space-y-2 border-t border-sand-line pt-6 text-sm">

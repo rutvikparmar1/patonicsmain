@@ -1,7 +1,8 @@
+import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { CATEGORIES, PRODUCT_GROUPS, selectCategory, type ProductGroup } from "@/lib/site-data";
+import { CATEGORIES, PRODUCT_GROUPS, type ProductGroup } from "@/lib/site-data";
 import { cn } from "@/lib/utils";
 import { Reveal } from "./Reveal";
 import { SectionHeading } from "./SectionHeading";
@@ -61,9 +62,9 @@ export function Products() {
           {shown.map((c, i) => (
             <Reveal as="li" key={c.slug} delay={Math.min(i, 7) * 60} variant="scale">
               <div id={`product-${c.slug}`} className="scroll-mt-28">
-                <a
-                  href="#contact"
-                  onClick={() => selectCategory(c.name)}
+                <Link
+                  to="/contact"
+                  search={{ category: c.name }}
                   aria-label={`${c.name} — send an inquiry about this category`}
                   className="group relative block overflow-hidden rounded-[1.4rem] bg-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4"
                 >
@@ -115,7 +116,7 @@ export function Products() {
                       </ul>
                     </div>
                   </div>
-                </a>
+                </Link>
               </div>
             </Reveal>
           ))}
@@ -135,13 +136,13 @@ export function Products() {
                 </p>
               </div>
               <Button asChild variant="brand" size="xl" className="w-full">
-                <a href="#contact">
+                <Link to="/contact">
                   Send a requirement
                   <ArrowRight
                     className="transition-transform duration-300 group-hover:translate-x-1"
                     aria-hidden
                   />
-                </a>
+                </Link>
               </Button>
             </div>
           </Reveal>

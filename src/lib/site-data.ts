@@ -329,16 +329,20 @@ export const CREDENTIALS = [
 ] as const;
 
 export const NAV = [
-  { label: "Home", href: "#top" },
-  { label: "About", href: "#about" },
-  { label: "Products", href: "#products" },
-  { label: "Divisions", href: "#divisions" },
-  { label: "Quality", href: "#quality" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
+  { label: "Products", href: "/products" },
+  { label: "Divisions", href: "/divisions" },
+  { label: "Quality", href: "/quality" },
+  { label: "Contact", href: "/contact" },
 ] as const;
 
-/** Sections the header highlights as you scroll past them. */
-export const SECTION_IDS = ["top", "about", "products", "divisions", "quality", "contact"] as const;
+/** Secondary links, grouped in the footer rather than the main nav. */
+export const SECONDARY_NAV = [
+  { label: "Buyer FAQ", href: "/faq" },
+  { label: "Privacy", href: "/privacy" },
+  { label: "Terms", href: "/terms" },
+] as const;
 
 export const CONTACT = {
   company: "Patonics International Trading Co.",
@@ -355,8 +359,8 @@ export const waHref = (
   text = "Hello Patonics, I would like to discuss an export requirement.",
 ) => `https://wa.me/${p.replace(/\D/g, "")}?text=${encodeURIComponent(text)}`;
 
-/** Ask the inquiry form to preselect a category, then scroll to it. */
-export const SELECT_CATEGORY_EVENT = "patonics:select-category";
-export function selectCategory(name: string) {
-  window.dispatchEvent(new CustomEvent(SELECT_CATEGORY_EVENT, { detail: name }));
-}
+/*
+ * Category preselection travels in the URL (/contact?category=Spices) rather
+ * than a window event, so it still works once the contact form lives on its
+ * own page and so the link can be opened in a new tab or shared.
+ */
