@@ -18,9 +18,18 @@ const TINT: Record<string, string> = {
   cumin: "oklch(0.955 0.028 72)",
 };
 
-export function Products() {
+/**
+ * `compact` is the home-page version: one card per spice (the variant-less
+ * line), no filter, and a count of the varieties waiting on its own page.
+ */
+export function Products({ compact = false }: { compact?: boolean }) {
   const [group, setGroup] = useState<ProductGroup>("all");
-  const shown = group === "all" ? PRODUCTS : PRODUCTS.filter((p) => p.group === group);
+  const shown = compact
+    ? PRODUCTS.filter((p) => !p.variant)
+    : group === "all"
+      ? PRODUCTS
+      : PRODUCTS.filter((p) => p.group === group);
+  const varieties = (name: string) => PRODUCTS.filter((q) => q.name === name).length;
 
   return (
     <section
@@ -39,37 +48,41 @@ export function Products() {
             />
           </Reveal>
 
-          <Reveal delay={100} variant="fade">
-            {/*
+          {!compact && (
+            <Reveal delay={100} variant="fade">
+              {/*
               Toggle buttons, not a tablist: there are no tabpanels here, so
               aria-pressed is what describes these controls.
             */}
-            <div
-              role="group"
-              aria-label="Filter products by spice"
-              className="flex flex-wrap gap-1.5 rounded-full border border-sand-line bg-surface p-1.5"
-            >
-              {PRODUCT_GROUPS.map((g) => (
-                <button
-                  key={g.id}
-                  type="button"
-                  aria-pressed={group === g.id}
-                  onClick={() => setGroup(g.id)}
-                  className={cn(
-                    "rounded-full px-4 py-2 text-[0.82rem] font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-                    group === g.id
-                      ? "bg-ink text-white shadow-soft"
-                      : "text-ink/60 hover:bg-background hover:text-ink",
-                  )}
-                >
-                  {g.label}
-                </button>
-              ))}
-            </div>
-          </Reveal>
+              <div
+                role="group"
+                aria-label="Filter products by spice"
+                className="flex flex-wrap gap-1.5 rounded-full border border-sand-line bg-surface p-1.5"
+              >
+                {PRODUCT_GROUPS.map((g) => (
+                  <button
+                    key={g.id}
+                    type="button"
+                    aria-pressed={group === g.id}
+                    onClick={() => setGroup(g.id)}
+                    className={cn(
+                      "rounded-full px-4 py-2 text-[0.82rem] font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                      group === g.id
+                        ? "bg-ink text-white shadow-soft"
+                        : "text-ink/60 hover:bg-background hover:text-ink",
+                    )}
+                  >
+                    {g.label}
+                  </button>
+                ))}
+              </div>
+            </Reveal>
+          )}
         </div>
 
-        <ul className="mt-14 grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4">
+        <ul
+          className={`mt-14 grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-3 ${compact ? "xl:grid-cols-5" : "xl:grid-cols-4"}`}
+        >
           {shown.map((p, i) => (
             <Reveal as="li" key={p.slug} delay={Math.min(i, 7) * 60} variant="scale">
               <div id={`product-${p.slug}`} className="scroll-mt-28">
@@ -92,6 +105,11 @@ export function Products() {
                       decoding="async"
                       className="aspect-square w-full scale-[1.06] object-contain p-3 transition-transform duration-[700ms] ease-out group-hover:scale-[1.14]"
                     />
+                    {compact && varieties(p.name) > 1 && (
+                      <span className="absolute left-3 top-3 rounded-full bg-brand-green-deep px-2.5 py-1 text-[0.66rem] font-semibold uppercase tracking-wider text-white">
+                        {varieties(p.name)} varieties
+                      </span>
+                    )}
                     {p.variant && (
                       <span className="absolute left-3 top-3 rounded-full bg-ink/85 px-2.5 py-1 text-[0.66rem] font-semibold uppercase tracking-wider text-white backdrop-blur-sm">
                         {p.variant}

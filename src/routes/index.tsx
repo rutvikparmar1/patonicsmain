@@ -60,7 +60,7 @@ function Index() {
       <About />
       <Stats />
       <Divisions />
-      <Products />
+      <Products compact />
       <Process />
       <WhyUs />
       <GlobalReach />
