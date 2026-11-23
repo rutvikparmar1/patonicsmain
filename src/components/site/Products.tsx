@@ -1,15 +1,26 @@
-import { Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { Link } from "@tanstack/react-router";
+import { ArrowRight, ArrowUpRight, Package } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { CATEGORIES, PRODUCT_GROUPS, type ProductGroup } from "@/lib/site-data";
+import { PACKAGING, PRODUCTS, PRODUCT_GROUPS, type ProductGroup } from "@/lib/site-data";
 import { cn } from "@/lib/utils";
 import { Reveal } from "./Reveal";
 import { SectionHeading } from "./SectionHeading";
 
+/**
+ * A wash behind each pack, keyed to the spice. The supplied pack shots keep
+ * their transparent background, so they sit straight on the tint with no
+ * plate or faked drop shadow behind them.
+ */
+const TINT: Record<string, string> = {
+  chilli: "oklch(0.955 0.035 28)",
+  turmeric: "oklch(0.962 0.045 92)",
+  cumin: "oklch(0.955 0.028 72)",
+};
+
 export function Products() {
   const [group, setGroup] = useState<ProductGroup>("all");
-  const shown = group === "all" ? CATEGORIES : CATEGORIES.filter((c) => c.group === group);
+  const shown = group === "all" ? PRODUCTS : PRODUCTS.filter((p) => p.group === group);
 
   return (
     <section
@@ -23,19 +34,19 @@ export function Products() {
             <SectionHeading
               id="products-title"
               eyebrow="Products"
-              title="Eleven agri categories"
-              description="Bought in the growing regions, graded to the specification you agree with us, and consolidated into one shipment where the volumes allow it."
+              title="Our ground spice range"
+              description="Twelve lines across red chilli, turmeric, cumin and coriander, milled and packed under the Patonics label."
             />
           </Reveal>
 
           <Reveal delay={100} variant="fade">
             {/*
-              A group of toggle buttons, not a tablist: there are no tabpanels
-              here, so aria-pressed describes what these controls actually do.
+              Toggle buttons, not a tablist: there are no tabpanels here, so
+              aria-pressed is what describes these controls.
             */}
             <div
               role="group"
-              aria-label="Filter products by type"
+              aria-label="Filter products by spice"
               className="flex flex-wrap gap-1.5 rounded-full border border-sand-line bg-surface p-1.5"
             >
               {PRODUCT_GROUPS.map((g) => (
@@ -58,95 +69,84 @@ export function Products() {
           </Reveal>
         </div>
 
-        <ul className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {shown.map((c, i) => (
-            <Reveal as="li" key={c.slug} delay={Math.min(i, 7) * 60} variant="scale">
-              <div id={`product-${c.slug}`} className="scroll-mt-28">
+        <ul className="mt-14 grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4">
+          {shown.map((p, i) => (
+            <Reveal as="li" key={p.slug} delay={Math.min(i, 7) * 60} variant="scale">
+              <div id={`product-${p.slug}`} className="scroll-mt-28">
                 <Link
                   to="/contact"
-                  search={{ category: c.name }}
-                  aria-label={`${c.name} — send an inquiry about this category`}
-                  className="group relative block overflow-hidden rounded-[1.4rem] bg-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4"
+                  search={{ product: p.slug }}
+                  aria-label={`${p.name}${p.variant ? ` ${p.variant}` : ""} — send an enquiry`}
+                  className="group block rounded-[1.4rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4"
                 >
-                  <img
-                    src={c.image}
-                    alt={c.alt}
-                    width={800}
-                    height={960}
-                    loading="lazy"
-                    decoding="async"
-                    className="aspect-[4/5] w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.07]"
-                  />
-
-                  {/* Permanent base scrim keeps the title legible on any photo. */}
                   <div
-                    className="absolute inset-0 bg-gradient-to-t from-ink via-ink/25 to-transparent"
-                    aria-hidden
-                  />
-                  <div
-                    className="absolute inset-0 bg-ink/0 transition-colors duration-500 group-hover:bg-ink/35"
-                    aria-hidden
-                  />
-
-                  <div className="absolute inset-x-0 bottom-0 p-5">
-                    <div className="flex items-start justify-between gap-3">
-                      <h3 className="font-display text-[1.2rem] font-semibold leading-tight tracking-tight text-white">
-                        {c.name}
-                      </h3>
-                      <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-full border border-white/30 text-white transition-all duration-300 group-hover:border-brand-green group-hover:bg-brand-green group-hover:text-ink">
-                        <ArrowUpRight className="size-3.5" aria-hidden />
+                    className="relative overflow-hidden rounded-[1.4rem] border border-sand-line"
+                    style={{ backgroundColor: TINT[p.group] }}
+                  >
+                    <img
+                      src={p.image}
+                      alt={p.alt}
+                      width={1000}
+                      height={1000}
+                      loading={i < 4 ? "eager" : "lazy"}
+                      decoding="async"
+                      className="aspect-square w-full scale-[1.06] object-contain p-3 transition-transform duration-[700ms] ease-out group-hover:scale-[1.14]"
+                    />
+                    {p.variant && (
+                      <span className="absolute left-3 top-3 rounded-full bg-ink/85 px-2.5 py-1 text-[0.66rem] font-semibold uppercase tracking-wider text-white backdrop-blur-sm">
+                        {p.variant}
                       </span>
-                    </div>
+                    )}
+                  </div>
 
-                    {/*
-                      The item list is what a trade buyer scans for. It stays in
-                      the DOM and slides up on hover rather than being swapped in.
-                    */}
-                    <div className="max-h-0 overflow-hidden opacity-0 transition-all duration-500 ease-out group-hover:max-h-40 group-hover:opacity-100 group-focus-visible:max-h-40 group-focus-visible:opacity-100">
-                      <p className="mt-3 text-[0.8rem] leading-relaxed text-white/70">{c.blurb}</p>
-                      <ul className="mt-3 flex flex-wrap gap-1.5">
-                        {c.items.map((item) => (
-                          <li
-                            key={item}
-                            className="rounded-full border border-white/20 bg-white/10 px-2.5 py-1 text-[0.7rem] font-medium text-white/90 backdrop-blur-sm"
-                          >
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
+                  <div className="mt-3.5 flex items-start justify-between gap-2 px-0.5">
+                    <div className="min-w-0">
+                      <h3 className="font-display text-[0.98rem] font-bold leading-snug text-ink sm:text-[1.05rem]">
+                        {p.name}
+                      </h3>
+                      <p className="mt-1 text-[0.8rem] leading-relaxed text-muted-foreground">
+                        {p.blurb}
+                      </p>
                     </div>
+                    <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-full border border-ink/12 text-ink transition-all duration-300 group-hover:border-brand-green-deep group-hover:bg-brand-green-deep group-hover:text-white">
+                      <ArrowUpRight className="size-3.5" aria-hidden />
+                    </span>
                   </div>
                 </Link>
               </div>
             </Reveal>
           ))}
+        </ul>
 
-          <Reveal as="li" variant="scale" delay={120} className="sm:col-span-2 lg:col-span-1">
-            <div className="flex h-full flex-col justify-between gap-7 rounded-[1.4rem] border border-sand-line bg-surface p-7">
+        {/* Every line comes in the same formats, so this sits once under the grid. */}
+        <Reveal delay={80} className="mt-14">
+          <div className="flex flex-col gap-7 rounded-[1.6rem] border border-sand-line bg-surface p-7 md:flex-row md:items-center md:justify-between md:p-9">
+            <div className="flex items-start gap-5">
+              <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-brand-green-deep text-white">
+                <Package className="size-5" aria-hidden />
+              </span>
               <div>
-                <span className="flex size-11 items-center justify-center rounded-full bg-brand-green-deep text-white">
-                  <ArrowRight className="size-5" aria-hidden />
-                </span>
-                <p className="mt-6 font-display text-[1.35rem] font-semibold leading-snug text-ink">
-                  Looking for something not listed?
-                </p>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                  Send the product, grade, quantity and destination port, and we will come back with
-                  a price or tell you we cannot source it.
+                <h3 className="font-display text-[1.2rem] font-bold text-ink">
+                  Every line, in seven pack sizes
+                </h3>
+                <p className="mt-2 max-w-xl text-[0.9rem] leading-relaxed text-muted-foreground">
+                  Retail from {PACKAGING.retail[0]} to {PACKAGING.retail.at(-1)}, bulk at{" "}
+                  {PACKAGING.bulk.join(" and ")}. Private-label and retail-ready packing to your own
+                  artwork.
                 </p>
               </div>
-              <Button asChild variant="brand" size="xl" className="w-full">
-                <Link to="/contact">
-                  Send a requirement
-                  <ArrowRight
-                    className="transition-transform duration-300 group-hover:translate-x-1"
-                    aria-hidden
-                  />
-                </Link>
-              </Button>
             </div>
-          </Reveal>
-        </ul>
+            <Button asChild variant="brandOutline" size="xl" className="shrink-0">
+              <Link to="/packaging">
+                View packaging
+                <ArrowRight
+                  className="transition-transform duration-300 group-hover:translate-x-1"
+                  aria-hidden
+                />
+              </Link>
+            </Button>
+          </div>
+        </Reveal>
       </div>
     </section>
   );

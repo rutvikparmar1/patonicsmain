@@ -14,6 +14,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DivisionsRouteImport } from './routes/divisions'
 import { Route as FaqRouteImport } from './routes/faq'
+import { Route as PackagingRouteImport } from './routes/packaging'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ProductsRouteImport } from './routes/products'
 import { Route as QualityRouteImport } from './routes/quality'
@@ -44,6 +45,11 @@ const FaqRoute = FaqRouteImport.update({
   path: '/faq',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PackagingRoute = PackagingRouteImport.update({
+  id: '/packaging',
+  path: '/packaging',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
@@ -71,6 +77,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/divisions': typeof DivisionsRoute
   '/faq': typeof FaqRoute
+  '/packaging': typeof PackagingRoute
   '/privacy': typeof PrivacyRoute
   '/products': typeof ProductsRoute
   '/quality': typeof QualityRoute
@@ -82,6 +89,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/divisions': typeof DivisionsRoute
   '/faq': typeof FaqRoute
+  '/packaging': typeof PackagingRoute
   '/privacy': typeof PrivacyRoute
   '/products': typeof ProductsRoute
   '/quality': typeof QualityRoute
@@ -94,6 +102,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/divisions': typeof DivisionsRoute
   '/faq': typeof FaqRoute
+  '/packaging': typeof PackagingRoute
   '/privacy': typeof PrivacyRoute
   '/products': typeof ProductsRoute
   '/quality': typeof QualityRoute
@@ -107,6 +116,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/divisions'
     | '/faq'
+    | '/packaging'
     | '/privacy'
     | '/products'
     | '/quality'
@@ -118,6 +128,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/divisions'
     | '/faq'
+    | '/packaging'
     | '/privacy'
     | '/products'
     | '/quality'
@@ -129,6 +140,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/divisions'
     | '/faq'
+    | '/packaging'
     | '/privacy'
     | '/products'
     | '/quality'
@@ -141,6 +153,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   DivisionsRoute: typeof DivisionsRoute
   FaqRoute: typeof FaqRoute
+  PackagingRoute: typeof PackagingRoute
   PrivacyRoute: typeof PrivacyRoute
   ProductsRoute: typeof ProductsRoute
   QualityRoute: typeof QualityRoute
@@ -184,6 +197,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FaqRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/packaging': {
+      id: '/packaging'
+      path: '/packaging'
+      fullPath: '/packaging'
+      preLoaderRoute: typeof PackagingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/privacy': {
       id: '/privacy'
       path: '/privacy'
@@ -221,6 +241,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   DivisionsRoute: DivisionsRoute,
   FaqRoute: FaqRoute,
+  PackagingRoute: PackagingRoute,
   PrivacyRoute: PrivacyRoute,
   ProductsRoute: ProductsRoute,
   QualityRoute: QualityRoute,

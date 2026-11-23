@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, ArrowUp, Mail, MapPin, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { CATEGORIES, CONTACT, DIVISIONS, NAV, telHref } from "@/lib/site-data";
+import { CONTACT, DIVISIONS, NAV, PRODUCTS, productLabel, telHref } from "@/lib/site-data";
 import { Reveal } from "./Reveal";
 import logo from "@/assets/patonics-logo.webp";
 
@@ -129,16 +129,16 @@ export function SiteFooter() {
       {/* Category index: good for buyers scanning, and for search engines. */}
       <div className="border-t border-white/10">
         <div className="container-site py-8">
-          <p className="eyebrow text-[0.64rem] text-white/35">Product Categories</p>
+          <p className="eyebrow text-[0.64rem] text-white/35">Spice Range</p>
           <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-2.5">
-            {CATEGORIES.map((c) => (
-              <li key={c.slug}>
+            {PRODUCTS.map((p) => (
+              <li key={p.slug}>
                 <Link
                   to="/contact"
-                  search={{ category: c.name }}
+                  search={{ product: p.slug }}
                   className="text-[0.82rem] text-white/50 transition-colors hover:text-brand-green"
                 >
-                  {c.name}
+                  {productLabel(p)}
                 </Link>
               </li>
             ))}

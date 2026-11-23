@@ -3,7 +3,7 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { ArrowRight, ChevronDown, Mail, Menu, Phone, ShieldCheck, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { CATEGORIES, CONTACT, DIVISIONS, NAV, telHref } from "@/lib/site-data";
+import { CONTACT, DIVISIONS, NAV, PRODUCTS, productLabel, telHref } from "@/lib/site-data";
 import logo from "@/assets/patonics-logo.webp";
 
 export function SiteHeader() {
@@ -118,7 +118,7 @@ export function SiteHeader() {
               height={292}
               className={cn(
                 "w-auto transition-[height] duration-300",
-                scrolled ? "h-10 lg:h-11" : "h-10 lg:h-14",
+                scrolled ? "h-10 lg:h-11" : "h-10 lg:h-11 xl:h-14",
               )}
             />
           </Link>
@@ -141,8 +141,8 @@ export function SiteHeader() {
                       aria-expanded={hasMega ? mega : undefined}
                       onFocus={hasMega ? openMega : undefined}
                       className={cn(
-                        "relative inline-flex items-center gap-1.5 rounded-md px-3.5 py-2 text-[0.9rem] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-                        "after:absolute after:inset-x-3.5 after:-bottom-px after:h-[2px] after:origin-left after:scale-x-0 after:rounded-full after:bg-brand-green after:transition-transform after:duration-300 hover:after:scale-x-100",
+                        "relative inline-flex items-center gap-1.5 rounded-md px-2.5 py-2 text-[0.88rem] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring xl:px-3.5 xl:text-[0.9rem]",
+                        "after:absolute after:inset-x-2.5 xl:after:inset-x-3.5 after:-bottom-px after:h-[2px] after:origin-left after:scale-x-0 after:rounded-full after:bg-brand-green after:transition-transform after:duration-300 hover:after:scale-x-100",
                         isActive ? "text-ink after:scale-x-100" : "text-ink/65 hover:text-ink",
                       )}
                     >
@@ -195,16 +195,16 @@ export function SiteHeader() {
         >
           <div className="container-site grid gap-10 py-9 lg:grid-cols-12">
             <div className="lg:col-span-7">
-              <p className="eyebrow text-[0.64rem] text-brand-green-deep">Agri Categories</p>
+              <p className="eyebrow text-[0.64rem] text-brand-green-deep">Spice Range</p>
               <ul className="mt-5 grid grid-cols-3 gap-x-6 gap-y-1">
-                {CATEGORIES.map((c) => (
-                  <li key={c.slug}>
+                {PRODUCTS.map((p) => (
+                  <li key={p.slug}>
                     <Link
                       to="/contact"
-                      search={{ category: c.name }}
+                      search={{ product: p.slug }}
                       className="group flex items-center justify-between gap-2 rounded-md py-1.5 text-sm text-ink/75 transition-colors hover:text-brand-green-deep focus-visible:text-brand-green-deep focus-visible:outline-none"
                     >
-                      {c.name}
+                      {productLabel(p)}
                       <ArrowRight
                         className="size-3.5 -translate-x-1 opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100"
                         aria-hidden
@@ -258,16 +258,16 @@ export function SiteHeader() {
             ))}
           </ul>
 
-          <p className="eyebrow mt-7 text-[0.64rem] text-muted-foreground">Categories</p>
+          <p className="eyebrow mt-7 text-[0.64rem] text-muted-foreground">Products</p>
           <ul className="mt-3 flex flex-wrap gap-2">
-            {CATEGORIES.map((c) => (
-              <li key={c.slug}>
+            {PRODUCTS.map((p) => (
+              <li key={p.slug}>
                 <Link
                   to="/contact"
-                  search={{ category: c.name }}
+                  search={{ product: p.slug }}
                   className="inline-flex rounded-full border border-sand-line bg-surface px-3 py-1.5 text-xs font-medium text-ink/75"
                 >
-                  {c.name}
+                  {productLabel(p)}
                 </Link>
               </li>
             ))}

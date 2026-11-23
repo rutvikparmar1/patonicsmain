@@ -19,7 +19,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useSearch } from "@tanstack/react-router";
-import { CATEGORIES, CONTACT, telHref, waHref } from "@/lib/site-data";
+import { CONTACT, PRODUCTS, productLabel, telHref, waHref } from "@/lib/site-data";
 import {
   buildInquiryMailto,
   validateInquiry,
@@ -53,13 +53,13 @@ export function Contact() {
    * The value is matched against the known list rather than trusted, so a
    * hand-edited URL cannot inject text into the form.
    */
-  const search = useSearch({ strict: false }) as { category?: string };
-  const preset = search.category;
+  const search = useSearch({ strict: false }) as { product?: string };
+  const preset = search.product;
 
   useEffect(() => {
     if (!preset) return;
-    const known = CATEGORIES.find((c) => c.name === preset);
-    if (known) setForm((f) => ({ ...f, category: known.name }));
+    const known = PRODUCTS.find((p) => p.slug === preset);
+    if (known) setForm((f) => ({ ...f, category: productLabel(known) }));
   }, [preset]);
 
   const set = (k: keyof Inquiry) => (e: { target: { value: string } }) => {
@@ -209,10 +209,10 @@ export function Contact() {
                   onChange={set("category")}
                   className={inputCls()}
                 >
-                  <option value="">Select a category</option>
-                  {CATEGORIES.map((c) => (
-                    <option key={c.slug} value={c.name}>
-                      {c.name}
+                  <option value="">Select a product</option>
+                  {PRODUCTS.map((p) => (
+                    <option key={p.slug} value={productLabel(p)}>
+                      {productLabel(p)}
                     </option>
                   ))}
                 </select>

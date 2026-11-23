@@ -5,14 +5,14 @@ import { PageHero } from "@/components/site/PageHero";
 
 export const Route = createFileRoute("/contact")({
   /*
-   * `category` arrives from a product card or the mega menu. It is read back as
-   * a plain string here and matched against the known category list inside the
-   * form, so an arbitrary value in the URL never reaches the field.
+   * `product` arrives from a product card or the mega menu as a slug. It is
+   * read back as a plain string here and matched against the known product
+   * list inside the form, so an arbitrary value never reaches the field.
    */
-  validateSearch: (search: Record<string, unknown>): { category?: string } => {
+  validateSearch: (search: Record<string, unknown>): { product?: string } => {
     // Bracket access: tsconfig sets noPropertyAccessFromIndexSignature.
-    const category = search["category"];
-    return typeof category === "string" && category ? { category } : {};
+    const product = search["product"];
+    return typeof product === "string" && product ? { product } : {};
   },
   head: () => ({
     meta: [

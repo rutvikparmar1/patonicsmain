@@ -335,12 +335,23 @@
   html {
     -webkit-font-smoothing: antialiased;
     scroll-behavior: smooth;
+    /* See the note on body: the clip has to be on the root element, since that
+       is what reports document scroll width. */
+    overflow-x: clip;
   }
 
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
+    /*
+     * Scroll-reveal shifts elements sideways before they fire, so an unrevealed
+     * block at the right edge of the container sticks a few pixels past the
+     * viewport and raises a horizontal scrollbar that vanishes once it reveals.
+     * `clip` rather than `hidden`: hidden would make body a scroll container and
+     * break the sticky header.
+     */
+    overflow-x: clip;
   }
 
   h1,

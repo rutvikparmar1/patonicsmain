@@ -1,133 +1,163 @@
-import grains from "@/assets/cat-grains.jpg";
-import pulses from "@/assets/cat-pulses.jpg";
-import spices from "@/assets/cat-spices.jpg";
-import fruits from "@/assets/cat-fruits.jpg";
-import vegetables from "@/assets/cat-vegetables.jpg";
-import oilseeds from "@/assets/cat-oilseeds.jpg";
-import floriculture from "@/assets/cat-floriculture.jpg";
-import herbs from "@/assets/cat-herbs.jpg";
-import dryfruits from "@/assets/cat-dryfruits.jpg";
-import beverages from "@/assets/cat-beverages.jpg";
-import dehydrated from "@/assets/cat-dehydrated.jpg";
+import cuminRoasted from "@/assets/products/cumin-powder-roasted.webp";
+import coriander from "@/assets/products/coriander-powder.webp";
+import cuminCoriander from "@/assets/products/cumin-coriander-powder.webp";
+import cumin from "@/assets/products/cumin-powder.webp";
+import turmeric from "@/assets/products/turmeric-powder.webp";
+import chilliGholar from "@/assets/products/red-chilli-powder-gholar.webp";
+import chilli from "@/assets/products/red-chilli-powder.webp";
+import chilliKashmiri from "@/assets/products/red-chilli-powder-kashmiri.webp";
+import turmericSalem from "@/assets/products/turmeric-powder-salem.webp";
+import turmericRajapari from "@/assets/products/turmeric-powder-rajapari.webp";
+import turmericKasturi from "@/assets/products/turmeric-powder-kasturi.webp";
+import chilliReshampatta from "@/assets/products/red-chilli-powder-reshampatta.webp";
 
-/**
- * Product groups double as filter tabs on the products grid.
- */
+/** Product groups double as filter tabs on the products grid. */
 export const PRODUCT_GROUPS = [
   { id: "all", label: "All" },
-  { id: "staples", label: "Staples & Grains" },
-  { id: "fresh", label: "Fresh Produce" },
-  { id: "processed", label: "Processed" },
+  { id: "chilli", label: "Red Chilli" },
+  { id: "turmeric", label: "Turmeric" },
+  { id: "cumin", label: "Cumin & Coriander" },
 ] as const;
 
 export type ProductGroup = (typeof PRODUCT_GROUPS)[number]["id"];
 
 /**
- * `items` lists the representative products shown on each category card.
- * Each list is drawn from the commodity set already photographed for that
- * category, so the copy and the image always agree.
+ * The ground-spice range, as packed.
+ *
+ * `variant` is the grade or growing region the pack is named for and is what
+ * separates one chilli or turmeric from the next, so it is kept apart from
+ * `name` rather than folded into it: the cards lead on the spice and the
+ * filters group by it.
+ *
+ * Images are the supplied 500g pack shots, resized and converted to WebP with
+ * their transparent background intact, which is why the packs can sit directly
+ * on a section colour with no plate behind them.
  */
-export const CATEGORIES = [
+export const PRODUCTS = [
   {
-    slug: "grains-cereals",
-    name: "Grains & Cereals",
-    group: "staples",
-    image: grains,
-    alt: "Bowls of basmati rice, wheat and maize with wheat stalks",
-    blurb: "Bulk staples graded and sortex-cleaned for volume buyers.",
-    items: ["Basmati Rice", "Non-Basmati Rice", "Wheat", "Maize"],
+    slug: "red-chilli-powder",
+    name: "Red Chilli Powder",
+    variant: null,
+    group: "chilli",
+    image: chilli,
+    alt: "Patonics Red Chilli Powder 500g pack with a bowl of ground red chilli and whole chillies",
+    blurb: "Everyday ground chilli, milled from dried red chillies.",
   },
   {
-    slug: "pulses",
-    name: "Pulses",
-    group: "staples",
-    image: pulses,
-    alt: "Red lentils, yellow moong dal, chickpeas and black urad in brass bowls",
-    blurb: "Whole and split pulses, machine-cleaned and uniformly sized.",
-    items: ["Red Lentils", "Moong Dal", "Chickpeas", "Black Urad"],
+    slug: "red-chilli-powder-kashmiri",
+    name: "Red Chilli Powder",
+    variant: "Kashmiri",
+    group: "chilli",
+    image: chilliKashmiri,
+    alt: "Patonics Kashmiri Red Chilli Powder 500g pack with a bowl of deep red powder and dried chillies",
+    blurb:
+      "Prized for colour rather than heat. The usual choice where a dish needs red without burn.",
   },
   {
-    slug: "spices",
-    name: "Spices",
-    group: "processed",
-    image: spices,
-    alt: "Whole cumin, turmeric, red chillies, cardamom, pepper and cinnamon",
-    blurb: "Whole and ground spices sourced from their growing regions.",
-    items: ["Cumin", "Turmeric", "Red Chilli", "Cardamom", "Black Pepper", "Cinnamon"],
+    slug: "red-chilli-powder-reshampatta",
+    name: "Red Chilli Powder",
+    variant: "Reshampatta",
+    group: "chilli",
+    image: chilliReshampatta,
+    alt: "Patonics Reshampatta Red Chilli Powder 500g pack with a bowl of powder and dried reshampatta chillies",
+    blurb: "A Gujarat favourite. Moderate heat with a bright, even colour.",
   },
   {
-    slug: "fruits",
-    name: "Fruits",
-    group: "fresh",
-    image: fruits,
-    alt: "Mangoes, pomegranates, bananas and grapes in a wooden crate",
-    blurb: "Seasonal fresh fruit packed for export transit.",
-    items: ["Mango", "Pomegranate", "Banana", "Grapes"],
+    slug: "red-chilli-powder-gholar",
+    name: "Red Chilli Powder",
+    variant: "Gholar",
+    group: "chilli",
+    image: chilliGholar,
+    alt: "Patonics Gholar Red Chilli Powder 500g pack with a bowl of powder and round gholar chillies",
+    blurb: "Ground from the short, round gholar chilli. Fuller heat than Kashmiri.",
   },
   {
-    slug: "vegetables",
-    name: "Vegetables",
-    group: "fresh",
-    image: vegetables,
-    alt: "Red onions, potatoes, okra, green chillies and garlic",
-    blurb: "Fresh vegetables sorted by grade, size and destination.",
-    items: ["Red Onion", "Potato", "Okra", "Green Chilli", "Garlic"],
+    slug: "turmeric-powder",
+    name: "Turmeric Powder",
+    variant: null,
+    group: "turmeric",
+    image: turmeric,
+    alt: "Patonics Turmeric Powder 500g pack with a plate of yellow powder and turmeric fingers",
+    blurb: "Standard milled turmeric for everyday kitchen and food-service use.",
   },
   {
-    slug: "oilseeds",
-    name: "Oilseeds",
-    group: "staples",
-    image: oilseeds,
-    alt: "Groundnuts, sesame, mustard, sunflower and castor seeds",
-    blurb: "Oil-bearing seeds for crushing, food and industrial use.",
-    items: ["Groundnut", "Sesame Seeds", "Mustard", "Sunflower", "Castor"],
+    slug: "turmeric-powder-salem",
+    name: "Turmeric Powder",
+    variant: "Salem",
+    group: "turmeric",
+    image: turmericSalem,
+    alt: "Patonics Salem Turmeric Powder 500g pack with a plate of powder and turmeric fingers",
+    blurb: "From the Salem belt in Tamil Nadu, the variety most asked for by name.",
   },
   {
-    slug: "floriculture",
-    name: "Floriculture",
-    group: "fresh",
-    image: floriculture,
-    alt: "Bunches of marigolds, red roses, tuberose and jasmine",
-    blurb: "Cut flowers and loose blooms handled on short cycles.",
-    items: ["Marigold", "Rose", "Tuberose", "Jasmine"],
+    slug: "turmeric-powder-rajapari",
+    name: "Turmeric Powder",
+    variant: "Rajapari",
+    group: "turmeric",
+    image: turmericRajapari,
+    alt: "Patonics Rajapari Turmeric Powder 500g pack with a plate of deep orange powder and turmeric root",
+    blurb: "Deeper orange in the pack and in the pot.",
   },
   {
-    slug: "herbs",
-    name: "Herbs",
-    group: "processed",
-    image: herbs,
-    alt: "Moringa, tulsi, mint, curry leaves and ashwagandha roots",
-    blurb: "Culinary and botanical herbs, fresh or dried to order.",
-    items: ["Moringa", "Tulsi", "Mint", "Curry Leaves", "Ashwagandha"],
+    slug: "turmeric-powder-kasturi",
+    name: "Turmeric Powder",
+    variant: "Kasturi",
+    group: "turmeric",
+    image: turmericKasturi,
+    alt: "Patonics Kasturi Turmeric Powder 500g pack with a plate of powder and dried kasturi turmeric",
+    blurb: "The aromatic kasturi variety, used more for fragrance than for colour.",
   },
   {
-    slug: "dry-fruits",
-    name: "Dry Fruits",
-    group: "processed",
-    image: dryfruits,
-    alt: "Cashews, almonds, raisins, pistachios and dates in brass bowls",
-    blurb: "Nuts and dried fruit graded by count, colour and size.",
-    items: ["Cashew", "Almond", "Raisin", "Pistachio", "Dates"],
+    slug: "cumin-powder",
+    name: "Cumin Powder",
+    variant: null,
+    group: "cumin",
+    image: cumin,
+    alt: "Patonics Cumin Powder 500g pack with a bowl of ground cumin and whole cumin seeds",
+    blurb: "Ground from clean, sortex-grade cumin seed.",
   },
   {
-    slug: "beverages",
-    name: "Beverages",
-    group: "processed",
-    image: beverages,
-    alt: "Loose tea leaves, coffee beans and a cup of tea",
-    blurb: "Tea and coffee in loose, bulk and private-label formats.",
-    items: ["Tea Leaves", "Coffee Beans"],
+    slug: "cumin-powder-roasted",
+    name: "Cumin Powder",
+    variant: "Roasted",
+    group: "cumin",
+    image: cuminRoasted,
+    alt: "Patonics Roasted Cumin Powder 500g pack with a bowl of dark roasted cumin powder and seeds",
+    blurb: "Roasted before milling, which darkens the powder and deepens the aroma.",
   },
   {
-    slug: "dehydrated-products",
-    name: "Dehydrated Products",
-    group: "processed",
-    image: dehydrated,
-    alt: "Dried onion flakes, garlic powder, dried mango and tomato powder",
-    blurb: "Flakes, powders and granules with long shelf stability.",
-    items: ["Onion Flakes", "Garlic Powder", "Dried Mango", "Tomato Powder"],
+    slug: "coriander-powder",
+    name: "Coriander Powder",
+    variant: null,
+    group: "cumin",
+    image: coriander,
+    alt: "Patonics Coriander Powder 500g pack with a bowl of powder, coriander leaf and seeds",
+    blurb: "Milled coriander seed, the base of most masala blends.",
+  },
+  {
+    slug: "cumin-coriander-powder",
+    name: "Cumin Coriander Powder",
+    variant: null,
+    group: "cumin",
+    image: cuminCoriander,
+    alt: "Patonics Cumin Coriander Powder 500g pack with a bowl of blended powder and seeds",
+    blurb: "The dhana-jeeru blend, ground together to a set ratio.",
   },
 ] as const;
+
+/** Full display name, for places that need the grade spelled out. */
+export const productLabel = (p: { name: string; variant: string | null }) =>
+  p.variant ? `${p.name} â€” ${p.variant}` : p.name;
+
+/**
+ * Pack formats offered across the range. Retail packs are the printed
+ * consumer-facing bags shown on the product cards; bulk is supplied for
+ * repackers, food service and private-label programmes.
+ */
+export const PACKAGING = {
+  retail: ["50g", "100g", "200g", "500g", "1kg"],
+  bulk: ["5kg", "25kg"],
+} as const;
 
 /**
  * The five business lines Patonics International was set up to supply.
@@ -137,10 +167,10 @@ export const DIVISIONS = [
   {
     id: "agri",
     name: "Agri Commodities",
-    tagline: "Grains, pulses, spices, oilseeds and fresh produce",
-    text: "Our core business. Eleven categories sourced across Indian growing regions and consolidated for domestic and export buyers.",
+    tagline: "Ground spices under the Patonics label",
+    text: "Our core business. Twelve ground-spice lines milled and packed in Gujarat for domestic and export buyers.",
     href: "#products",
-    cta: "View all categories",
+    cta: "View the range",
   },
   {
     id: "agro",
@@ -190,10 +220,10 @@ export const STATS = [
     note: "Predecessor firm founded in Chachka, Gujarat",
   },
   {
-    value: 11,
-    label: "Agri categories",
+    value: 12,
+    label: "Spice lines",
     suffix: "",
-    note: "From grains and pulses to dehydrated products",
+    note: "Red chilli, turmeric, cumin and coriander",
   },
   {
     value: 10,
@@ -262,7 +292,7 @@ export const TIMELINE = [
   },
   {
     year: "Today",
-    title: "Eleven categories, ten markets",
+    title: "Twelve spice lines, ten markets",
     text: "An ISO 9001:2015 certified trading house spanning agri commodities, agro-processed goods, ceramics, textiles and paper.",
   },
 ] as const;
@@ -292,7 +322,7 @@ export const LEADERSHIP = [
 export const FAQS = [
   {
     q: "What can you supply, and in what volumes?",
-    a: "Eleven agri categories plus ceramics, textiles, and paper and packaging. Volumes are quoted per enquiry, from part-container trial orders through to repeat full-container programmes. Tell us the product, grade and destination and we will confirm what is workable.",
+    a: "Twelve ground-spice lines plus ceramics, textiles, and paper and packaging. Retail packs run 50g to 1kg and bulk is 5kg and 25kg. Volumes are quoted per enquiry, from part-container trial orders through to repeat full-container programmes.",
   },
   {
     q: "Can we see samples before we commit?",
@@ -332,6 +362,7 @@ export const NAV = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Products", href: "/products" },
+  { label: "Packaging", href: "/packaging" },
   { label: "Divisions", href: "/divisions" },
   { label: "Quality", href: "/quality" },
   { label: "Contact", href: "/contact" },

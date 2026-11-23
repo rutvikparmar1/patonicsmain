@@ -12,7 +12,7 @@ export const Route = createFileRoute("/products")({
       {
         name: "description",
         content:
-          "Eleven agricultural categories: grains and cereals, pulses, spices, fruits, vegetables, oilseeds, floriculture, herbs, dry fruits, beverages and dehydrated products.",
+          "Twelve ground spice lines: red chilli including Kashmiri, Reshampatta and Gholar, turmeric including Salem, Rajapari and Kasturi, plus cumin, roasted cumin, coriander and cumin-coriander blend.",
       },
     ],
   }),
@@ -24,8 +24,8 @@ function ProductsPage() {
     <main id="main" tabIndex={-1} className="outline-none">
       <PageHero
         eyebrow="Products"
-        title="Eleven agri categories, one supplier"
-        lead="Bought in the growing regions, graded to the specification you agree with us, and consolidated into one shipment where the volumes allow it."
+        title="Twelve spice lines, one supplier"
+        lead="Milled and packed under the Patonics label, in retail packs from 50g to 1kg and bulk at 5kg and 25kg."
       />
       <Products />
       <Process />

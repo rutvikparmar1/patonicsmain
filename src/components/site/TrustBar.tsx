@@ -1,11 +1,11 @@
-import { CATEGORIES } from "@/lib/site-data";
+import { PRODUCTS, productLabel } from "@/lib/site-data";
 
 /**
- * A continuous strip of what the company actually ships. The list is rendered
- * twice and the track travels exactly -50%, so the loop has no visible seam.
+ * A continuous strip of the range. The list is rendered twice and the track
+ * travels exactly -50%, so the loop has no visible seam.
  */
 export function TrustBar() {
-  const items = [...CATEGORIES, ...CATEGORIES];
+  const items = [...PRODUCTS, ...PRODUCTS];
 
   return (
     <section
@@ -14,14 +14,14 @@ export function TrustBar() {
     >
       <div className="relative overflow-hidden py-5">
         <ul className="animate-marquee flex w-max items-center gap-10 motion-reduce:animate-none">
-          {items.map((c, i) => (
+          {items.map((p, i) => (
             <li
-              key={`${c.slug}-${i}`}
+              key={`${p.slug}-${i}`}
               className="flex shrink-0 items-center gap-10"
-              aria-hidden={i >= CATEGORIES.length}
+              aria-hidden={i >= PRODUCTS.length}
             >
               <span className="font-display text-[1.05rem] font-semibold tracking-tight text-ink/70">
-                {c.name}
+                {productLabel(p)}
               </span>
               <span className="size-1.5 shrink-0 rounded-full bg-gold" aria-hidden />
             </li>

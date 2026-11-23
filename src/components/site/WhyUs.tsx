@@ -16,7 +16,7 @@ const FEATURES = [
   {
     icon: Layers,
     title: "Wide range",
-    text: "Eleven agri categories plus ceramics, textiles and packaging, so one supplier covers more of your list.",
+    text: "Twelve ground-spice lines plus ceramics, textiles and packaging, so one supplier covers more of your list.",
   },
   {
     icon: Sprout,

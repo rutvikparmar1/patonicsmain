@@ -33,7 +33,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "ISO 9001:2015 certified Indian exporter of grains, pulses, spices, oilseeds, fresh produce, dehydrated products, ceramics, textiles and packaging. Trading since 1983, serving 10+ markets across four continents.",
+          "ISO 9001:2015 certified Indian exporter of ground spices: red chilli, turmeric, cumin and coriander powders, plus ceramics, textiles and packaging. Trading since 1983, serving 10+ markets across four continents.",
       },
       {
         property: "og:title",
@@ -42,7 +42,7 @@ export const Route = createFileRoute("/")({
       {
         property: "og:description",
         content:
-          "Trusted Indian exporter of agricultural commodities and diverse products since 1983. Eleven agri categories, five business divisions, ten export markets.",
+          "Trusted Indian exporter of agricultural commodities and diverse products since 1983. Twelve ground spice lines, five business divisions, ten export markets.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
