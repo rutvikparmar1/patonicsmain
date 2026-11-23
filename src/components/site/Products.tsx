@@ -74,9 +74,9 @@ export function Products() {
             <Reveal as="li" key={p.slug} delay={Math.min(i, 7) * 60} variant="scale">
               <div id={`product-${p.slug}`} className="scroll-mt-28">
                 <Link
-                  to="/contact"
-                  search={{ product: p.slug }}
-                  aria-label={`${p.name}${p.variant ? ` ${p.variant}` : ""} — send an enquiry`}
+                  to="/products/$slug"
+                  params={{ slug: p.slug }}
+                  aria-label={`${p.name}${p.variant ? ` ${p.variant}` : ""} — view product`}
                   className="group block rounded-[1.4rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4"
                 >
                   <div

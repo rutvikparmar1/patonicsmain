@@ -134,8 +134,8 @@ export function SiteFooter() {
             {PRODUCTS.map((p) => (
               <li key={p.slug}>
                 <Link
-                  to="/contact"
-                  search={{ product: p.slug }}
+                  to="/products/$slug"
+                  params={{ slug: p.slug }}
                   className="text-[0.82rem] text-white/50 transition-colors hover:text-brand-green"
                 >
                   {productLabel(p)}

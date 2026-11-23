@@ -200,8 +200,8 @@ export function SiteHeader() {
                 {PRODUCTS.map((p) => (
                   <li key={p.slug}>
                     <Link
-                      to="/contact"
-                      search={{ product: p.slug }}
+                      to="/products/$slug"
+                      params={{ slug: p.slug }}
                       className="group flex items-center justify-between gap-2 rounded-md py-1.5 text-sm text-ink/75 transition-colors hover:text-brand-green-deep focus-visible:text-brand-green-deep focus-visible:outline-none"
                     >
                       {productLabel(p)}
@@ -263,8 +263,8 @@ export function SiteHeader() {
             {PRODUCTS.map((p) => (
               <li key={p.slug}>
                 <Link
-                  to="/contact"
-                  search={{ product: p.slug }}
+                  to="/products/$slug"
+                  params={{ slug: p.slug }}
                   className="inline-flex rounded-full border border-sand-line bg-surface px-3 py-1.5 text-xs font-medium text-ink/75"
                 >
                   {productLabel(p)}

@@ -147,7 +147,7 @@ export const PRODUCTS = [
 
 /** Full display name, for places that need the grade spelled out. */
 export const productLabel = (p: { name: string; variant: string | null }) =>
-  p.variant ? `${p.name} â€” ${p.variant}` : p.name;
+  p.variant ? `${p.name} — ${p.variant}` : p.name;
 
 /**
  * Pack formats offered across the range. Retail packs are the printed
