@@ -7,30 +7,8 @@ import { ORIGIN, PINS, SEA_LANES, SERVED_COUNTRIES, smoothPath } from "@/lib/tra
 import { cn } from "@/lib/utils";
 import { Reveal } from "./Reveal";
 import { Eyebrow } from "./SectionHeading";
-import { CargoPlaneIcon, ContainerShipIcon, ContainerTruckIcon } from "./FreightIcons";
 
 const [OX, OY] = project(ORIGIN.lon, ORIGIN.lat);
-
-const MODES = [
-  {
-    icon: ContainerTruckIcon,
-    title: "Inland haulage",
-    text: "From the mandi and the processing floor to Mundra and Kandla by road. Containers are stuffed and sealed under supervision before they leave.",
-    meta: "Gujarat · road",
-  },
-  {
-    icon: ContainerShipIcon,
-    title: "Ocean freight",
-    text: "FCL and LCL on the lanes above: westbound through Suez, into the Gulf through Hormuz, eastbound through Malacca.",
-    meta: "10 markets · FCL / LCL",
-  },
-  {
-    icon: CargoPlaneIcon,
-    title: "Air freight",
-    text: "Fruit, vegetables and cut flowers will not keep for a sea crossing, so they go by air instead.",
-    meta: "Perishables · direct",
-  },
-] as const;
 
 export function GlobalReach() {
   const [active, setActive] = useState<string | null>(null);
@@ -77,7 +55,7 @@ export function GlobalReach() {
               {[
                 ["10", "Export markets"],
                 ["2", "Home ports"],
-                ["3", "Freight modes"],
+                ["4", "Continents"],
               ].map(([n, label]) => (
                 <div key={label}>
                   <dd className="font-display text-[2.2rem] font-semibold leading-none text-ink">
@@ -250,56 +228,6 @@ export function GlobalReach() {
       </Reveal>
 
       <div className="container-site">
-        {/* Lane index. Doubles as the map legend on phones, where the labels are hidden. */}
-        <Reveal delay={60} className="mt-10">
-          <ul className="flex flex-wrap gap-2">
-            {SEA_LANES.map((lane) => (
-              <li key={lane.id}>
-                <button
-                  type="button"
-                  onMouseEnter={() => setActive(lane.market)}
-                  onMouseLeave={() => setActive(null)}
-                  onFocus={() => setActive(lane.market)}
-                  onBlur={() => setActive(null)}
-                  className={cn(
-                    "cursor-default rounded-full border px-3.5 py-2 text-[0.8rem] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-                    active === lane.market
-                      ? "border-ink bg-ink text-white"
-                      : "border-sand-line bg-surface text-ink/75 hover:border-brand-green",
-                  )}
-                >
-                  <span className="font-semibold">{lane.market}</span>
-                  <span
-                    className={cn(
-                      "ml-2",
-                      active === lane.market ? "text-white/60" : "text-muted-foreground",
-                    )}
-                  >
-                    {lane.port} · via {lane.via}
-                  </span>
-                </button>
-              </li>
-            ))}
-          </ul>
-        </Reveal>
-
-        {/* The three ways freight actually leaves. */}
-        <ul className="mt-14 grid gap-px overflow-hidden rounded-[1.6rem] border border-sand-line bg-sand-line md:grid-cols-3">
-          {MODES.map(({ icon: Icon, title, text, meta }, i) => (
-            <Reveal
-              as="li"
-              key={title}
-              delay={i * 90}
-              className="group bg-background p-8 transition-colors duration-500 hover:bg-surface md:p-9"
-            >
-              <Icon className="h-14 w-auto text-ink transition-colors duration-500 group-hover:text-brand-green-deep" />
-              <p className="eyebrow mt-7 text-[0.64rem] text-gold-deep">{meta}</p>
-              <h3 className="mt-3 font-display text-xl font-semibold text-ink">{title}</h3>
-              <p className="mt-2.5 text-[0.9rem] leading-relaxed text-muted-foreground">{text}</p>
-            </Reveal>
-          ))}
-        </ul>
-
         <Reveal
           delay={60}
           className="mt-12 flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:justify-between"
