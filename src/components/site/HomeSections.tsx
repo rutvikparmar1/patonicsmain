@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, Check } from "lucide-react";
 import { Reveal } from "@/components/site/Reveal";
-import { PRODUCTS, PRODUCT_GROUPS } from "@/lib/site-data";
+import { PRODUCTS } from "@/lib/site-data";
 import farmerImg from "@/assets/about-farmer.jpg";
 
 const NAMES = [...new Set(PRODUCTS.map((p) => p.variant ?? p.name.replace(" Powder", "")))];
@@ -82,44 +82,41 @@ export function Story() {
   );
 }
 
-const TILE_BG: Record<string, string> = {
-  chilli: "bg-[#f6e3dc]",
-  turmeric: "bg-[#f8ecd0]",
-  cumin: "bg-[#ece6d8]",
-};
+const TILE_BG = ["bg-[#f6e3dc]", "bg-[#f8ecd0]", "bg-[#efe6d6]", "bg-[#e9eedb]", "bg-[#f1e7da]"];
 
 export function RangeTiles() {
-  const groups = PRODUCT_GROUPS.filter((g) => g.id !== "all").map((g) => {
-    const items = PRODUCTS.filter((p) => p.group === g.id);
-    return { ...g, lead: items[0]!, count: items.length };
-  });
+  const main = PRODUCTS.filter((p) => p.variant === null);
   return (
     <section className="bg-surface py-20 md:py-28">
       <div className="container-site">
         <div className="text-center">
           <p className="eyebrow text-brand-green-deep">Our spices</p>
-          <h2 className="headline-section mt-4 text-ink">Three families, twelve powders</h2>
+          <h2 className="headline-section mt-4 text-ink">Our main products</h2>
         </div>
-        <ul className="mt-12 grid gap-6 md:grid-cols-3">
-          {groups.map((g, i) => (
-            <Reveal as="li" key={g.id} delay={i * 80}>
+        <ul className="mt-12 grid grid-cols-2 gap-4 md:gap-5 lg:grid-cols-5">
+          {main.map((p, i) => (
+            <Reveal
+              as="li"
+              key={p.slug}
+              delay={i * 70}
+              className={i === main.length - 1 ? "col-span-2 lg:col-span-1" : ""}
+            >
               <Link
                 to="/products/$slug"
-                params={{ slug: g.lead.slug }}
-                className={`group flex h-full flex-col items-center rounded-[2rem] p-8 text-center transition-transform duration-300 hover:-translate-y-1 ${TILE_BG[g.id]}`}
+                params={{ slug: p.slug }}
+                className={`group flex h-full flex-col items-center rounded-[1.6rem] p-5 text-center transition-transform duration-300 hover:-translate-y-1 md:p-6 ${TILE_BG[i % TILE_BG.length]}`}
               >
                 <img
-                  src={g.lead.image}
-                  alt={g.lead.alt}
+                  src={p.image}
+                  alt={p.alt}
                   loading="lazy"
-                  className="h-64 w-auto object-contain drop-shadow-xl transition-transform duration-500 group-hover:scale-105"
+                  className="h-40 w-auto object-contain drop-shadow-xl transition-transform duration-500 group-hover:scale-105 md:h-48"
                 />
-                <h3 className="mt-6 font-display text-2xl font-semibold text-ink">{g.label}</h3>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  {g.count} {g.count === 1 ? "variety" : "varieties"}
-                </p>
-                <span className="mt-5 inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 text-sm font-semibold text-white">
-                  View range <ArrowRight className="size-4" aria-hidden />
+                <h3 className="mt-5 font-display text-lg font-semibold leading-snug text-ink">
+                  {p.name}
+                </h3>
+                <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-green-deep">
+                  View <ArrowRight className="size-4" aria-hidden />
                 </span>
               </Link>
             </Reveal>
@@ -147,7 +144,7 @@ const POINTS = [
 
 export function WhyPatonics() {
   return (
-    <section className="bg-background py-20 md:py-28">
+    <section className="bg-surface py-20 md:py-28">
       <div className="container-site grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
         <Reveal>
           <p className="eyebrow text-brand-green-deep">Why Patonics</p>
