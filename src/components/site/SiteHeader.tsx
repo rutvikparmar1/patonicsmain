@@ -3,7 +3,7 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { ArrowRight, ChevronDown, Mail, Menu, MessageCircle, Phone, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { CONTACT, DIVISIONS, NAV, PRODUCTS, productLabel, telHref, waHref } from "@/lib/site-data";
-import logo from "@/assets/patonics-logo.webp";
+import logo from "@/assets/patonics-logo-ftf.webp";
 
 /**
  * A floating bar rather than a strip: one rounded, solid surface that holds
@@ -88,11 +88,11 @@ export function SiteHeader() {
               <img
                 src={logo}
                 alt="Patonics International"
-                width={1024}
-                height={292}
+                width={600}
+                height={416}
                 className={cn(
                   "w-auto transition-[height] duration-300",
-                  scrolled ? "h-9" : "h-10 xl:h-12",
+                  scrolled ? "h-12" : "h-14 xl:h-16",
                 )}
               />
             </Link>

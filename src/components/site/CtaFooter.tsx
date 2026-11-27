@@ -3,7 +3,7 @@ import { ArrowRight, ArrowUp, Mail, MapPin, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CONTACT, DIVISIONS, NAV, telHref } from "@/lib/site-data";
 import { Reveal } from "./Reveal";
-import logo from "@/assets/patonics-logo.webp";
+import logo from "@/assets/patonics-logo-ftf.webp";
 
 export function CtaBanner() {
   return (
@@ -61,10 +61,10 @@ export function SiteFooter() {
             <img
               src={logo}
               alt="Patonics International"
-              width={1024}
-              height={292}
+              width={600}
+              height={416}
               loading="lazy"
-              className="h-12 w-auto"
+              className="h-20 w-auto"
             />
           </div>
           {/* The registered name already ends in a full stop, so none is added here. */}
