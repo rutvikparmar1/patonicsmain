@@ -42,8 +42,8 @@ function PrivateLabelingPage() {
     <main id="main" tabIndex={-1} className="outline-none">
       <PageHero
         eyebrow="Private Labeling"
-        title="Our spices, your brand"
-        lead="We mill and pack any of our twelve spice lines under your label, in retail pouches from 50g to 1kg or bulk bags at 5kg and 25kg."
+        title="Our Flavors, Your Brand Identity!"
+        lead="We create premium-quality spices and specially crafted spice blends under your brand name, tailored to your preferences. With authentic traditional flavors, carefully selected ingredients, and years of expertise, we turn your ideas into products your customers will love. Because every brand deserves a unique identity, and nothing tells that story better than great taste."
       >
         <a
           href={waHref(
