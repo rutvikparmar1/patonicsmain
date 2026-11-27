@@ -84,7 +84,7 @@ function ProductPage() {
           {product.variant ?? product.name.split(" ")[0]}
         </span>
 
-        <div className="container-site relative grid items-center gap-10 py-12 lg:grid-cols-12 lg:gap-12 lg:py-16">
+        <div className="container-site relative grid items-center gap-10 pb-12 pt-32 lg:grid-cols-12 lg:gap-12 lg:pb-16 lg:pt-36">
           <div className="lg:col-span-6">
             <nav
               aria-label="Breadcrumb"

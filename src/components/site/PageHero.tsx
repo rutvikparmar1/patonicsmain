@@ -19,7 +19,7 @@ export function PageHero({
   children?: ReactNode;
 }) {
   return (
-    <section className="relative overflow-hidden bg-ink pb-16 pt-12 md:pb-20 md:pt-16">
+    <section className="relative overflow-hidden bg-ink pb-16 pt-32 md:pb-20 md:pt-36">
       <div className="absolute inset-0 bg-grid opacity-50" aria-hidden />
       <div
         className="absolute -right-24 -top-24 size-[26rem] rounded-full bg-brand-green/10 blur-3xl"

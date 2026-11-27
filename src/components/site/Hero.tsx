@@ -11,7 +11,7 @@ export function Hero() {
     <section
       id="top"
       aria-labelledby="hero-title"
-      className="relative isolate flex min-h-[calc(100svh-6rem)] flex-col justify-end overflow-hidden bg-ink"
+      className="relative isolate flex min-h-[100svh] flex-col justify-end overflow-hidden bg-ink"
     >
       {/* Backdrop: a slow push-in keeps the frame alive without demanding attention. */}
       <div className="absolute inset-0 -z-10" aria-hidden>
@@ -30,7 +30,7 @@ export function Hero() {
         <div className="absolute inset-0 grain-layer" />
       </div>
 
-      <div className="container-site flex flex-1 flex-col justify-center pb-14 pt-16 md:pb-20 md:pt-24">
+      <div className="container-site flex flex-1 flex-col justify-center pb-14 pt-32 md:pb-20 md:pt-36">
         <div className="max-w-3xl">
           <p className="eyebrow animate-rise flex items-center gap-3 text-brand-green">
             <span className="h-px w-10 bg-gold" aria-hidden />
