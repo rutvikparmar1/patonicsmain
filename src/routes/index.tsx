@@ -4,7 +4,7 @@ import { TrustBar } from "@/components/site/TrustBar";
 import { About } from "@/components/site/About";
 import { Stats } from "@/components/site/Stats";
 import { Divisions } from "@/components/site/Divisions";
-import { Products } from "@/components/site/Products";
+import { ProductShowcase } from "@/components/site/ProductShowcase";
 import { Process } from "@/components/site/Process";
 import { WhyUs } from "@/components/site/WhyUs";
 import { GlobalReach } from "@/components/site/GlobalReach";
@@ -60,7 +60,7 @@ function Index() {
       <About />
       <Stats />
       <Divisions />
-      <Products compact />
+      <ProductShowcase />
       <Process />
       <WhyUs />
       <GlobalReach />
