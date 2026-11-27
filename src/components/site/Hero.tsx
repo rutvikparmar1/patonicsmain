@@ -5,13 +5,13 @@ import { CREDENTIALS } from "@/lib/site-data";
 import heroImg from "@/assets/hero-commodities.jpg";
 
 export function Hero() {
-  // The min height is set against the sticky header (utility strip + bar) so
+  // The min height is set against the sticky header (the floating bar) so
   // the credential row lands just above the fold rather than below it.
   return (
     <section
       id="top"
       aria-labelledby="hero-title"
-      className="relative isolate flex min-h-[calc(100svh-8rem)] flex-col justify-end overflow-hidden bg-ink"
+      className="relative isolate flex min-h-[calc(100svh-6rem)] flex-col justify-end overflow-hidden bg-ink"
     >
       {/* Backdrop: a slow push-in keeps the frame alive without demanding attention. */}
       <div className="absolute inset-0 -z-10" aria-hidden>

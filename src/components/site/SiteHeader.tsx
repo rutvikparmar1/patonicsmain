@@ -1,20 +1,24 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { ArrowRight, ChevronDown, Mail, Menu, Phone, ShieldCheck, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ArrowRight, ChevronDown, Mail, Menu, MessageCircle, Phone, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { CONTACT, DIVISIONS, NAV, PRODUCTS, productLabel, telHref } from "@/lib/site-data";
+import { CONTACT, DIVISIONS, NAV, PRODUCTS, productLabel, telHref, waHref } from "@/lib/site-data";
 import logo from "@/assets/patonics-logo.webp";
 
+/**
+ * A floating bar rather than a strip: one rounded, solid surface that holds
+ * the logo, the nav as pills and the two contact actions. The thin dark
+ * utility strip and hairline underlines it replaces read as flimsy.
+ */
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [mega, setMega] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const megaTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => setScrolled(window.scrollY > 12);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -22,22 +26,20 @@ export function SiteHeader() {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key !== "Escape") return;
-      setOpen(false);
-      setMega(false);
+      if (e.key === "Escape") {
+        setOpen(false);
+        setMega(false);
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  // Close both menus whenever the route changes, or they stay open over the
-  // page you just navigated to.
   useEffect(() => {
     setOpen(false);
     setMega(false);
   }, [pathname]);
 
-  // Lock the page behind the mobile sheet so the body does not scroll under it.
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => {
@@ -45,70 +47,38 @@ export function SiteHeader() {
     };
   }, [open]);
 
-  useEffect(() => () => clearTimeout(megaTimer.current), []);
+  useEffect(() => () => clearTimeout(timer.current), []);
 
-  // A short close delay lets the pointer travel from the trigger into the panel.
   const openMega = () => {
-    clearTimeout(megaTimer.current);
+    clearTimeout(timer.current);
     setMega(true);
   };
   const closeMega = () => {
-    clearTimeout(megaTimer.current);
-    megaTimer.current = setTimeout(() => setMega(false), 140);
+    clearTimeout(timer.current);
+    timer.current = setTimeout(() => setMega(false), 140);
   };
 
-  return (
-    <header className="sticky top-0 z-50">
-      {/* Utility strip: the details a trade buyer looks for first. */}
-      <div
-        className={cn(
-          "hidden bg-ink text-white/70 transition-[max-height,opacity] duration-500 lg:block",
-          scrolled ? "max-h-0 overflow-hidden opacity-0" : "max-h-12 opacity-100",
-        )}
-      >
-        <div className="container-site flex h-10 items-center justify-between text-[0.78rem]">
-          <p className="flex items-center gap-2">
-            <ShieldCheck className="size-3.5 text-brand-green" aria-hidden />
-            ISO 9001:2015 certified
-            <span className="mx-1 text-white/25">|</span>
-            Trading since 1983
-          </p>
-          <div className="flex items-center gap-6">
-            <a
-              href={telHref(CONTACT.phones[0] ?? "")}
-              className="flex items-center gap-2 transition-colors hover:text-brand-green"
-            >
-              <Phone className="size-3.5" aria-hidden />
-              {CONTACT.phones[0]}
-            </a>
-            <a
-              href={`mailto:${CONTACT.emails[0]}`}
-              className="flex items-center gap-2 transition-colors hover:text-brand-green"
-            >
-              <Mail className="size-3.5" aria-hidden />
-              {CONTACT.emails[0]}
-            </a>
-          </div>
-        </div>
-      </div>
+  const phone = CONTACT.phones[0] ?? "";
 
-      <div
-        className={cn(
-          "border-b transition-all duration-300",
-          scrolled
-            ? "border-sand-line bg-background/90 shadow-soft backdrop-blur-xl"
-            : "border-transparent bg-background",
-        )}
-      >
+  return (
+    <header
+      className={cn(
+        "sticky top-0 z-50 px-3 transition-[padding] duration-300 sm:px-4",
+        scrolled ? "pt-2" : "pt-3 sm:pt-4",
+      )}
+    >
+      <div className="relative mx-auto max-w-[84rem]">
         <div
           className={cn(
-            "container-site flex items-center justify-between gap-6 transition-[height] duration-300",
-            scrolled ? "h-[68px]" : "h-[76px] lg:h-[88px]",
+            "flex items-center justify-between gap-4 rounded-2xl border px-4 transition-all duration-300 sm:px-5 lg:rounded-[1.4rem]",
+            scrolled
+              ? "h-16 border-ink/10 bg-white/85 shadow-lift backdrop-blur-xl"
+              : "h-[72px] border-ink/[0.07] bg-white shadow-soft lg:h-20",
           )}
         >
           <Link
             to="/"
-            className="shrink-0 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="shrink-0 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             aria-label="Patonics International — home"
           >
             <img
@@ -118,41 +88,38 @@ export function SiteHeader() {
               height={292}
               className={cn(
                 "w-auto transition-[height] duration-300",
-                scrolled ? "h-10 lg:h-11" : "h-10 lg:h-11 xl:h-14",
+                scrolled ? "h-9" : "h-10 xl:h-12",
               )}
             />
           </Link>
 
           <nav aria-label="Primary" className="hidden lg:block">
-            <ul className="flex items-center gap-0.5">
+            <ul className="flex items-center gap-0.5 rounded-full bg-surface p-1">
               {NAV.map((item) => {
-                const isActive =
+                const active =
                   item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
-                const hasMega = item.href === "/products";
+                const isProducts = item.href === "/products";
                 return (
                   <li
                     key={item.label}
-                    className="relative"
-                    {...(hasMega ? { onMouseEnter: openMega, onMouseLeave: closeMega } : {})}
+                    {...(isProducts ? { onMouseEnter: openMega, onMouseLeave: closeMega } : {})}
                   >
                     <Link
                       to={item.href}
-                      aria-current={isActive ? "page" : undefined}
-                      aria-expanded={hasMega ? mega : undefined}
-                      onFocus={hasMega ? openMega : undefined}
+                      aria-current={active ? "page" : undefined}
+                      aria-expanded={isProducts ? mega : undefined}
+                      onFocus={isProducts ? openMega : undefined}
                       className={cn(
-                        "relative inline-flex items-center gap-1.5 rounded-md px-2.5 py-2 text-[0.88rem] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring xl:px-3.5 xl:text-[0.9rem]",
-                        "after:absolute after:inset-x-2.5 xl:after:inset-x-3.5 after:-bottom-px after:h-[2px] after:origin-left after:scale-x-0 after:rounded-full after:bg-brand-green after:transition-transform after:duration-300 hover:after:scale-x-100",
-                        isActive ? "text-ink after:scale-x-100" : "text-ink/65 hover:text-ink",
+                        "inline-flex items-center gap-1 rounded-full px-3 py-2 text-[0.9rem] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring xl:px-4",
+                        active
+                          ? "bg-ink text-white shadow-soft"
+                          : "text-ink/70 hover:bg-white hover:text-ink",
                       )}
                     >
                       {item.label}
-                      {hasMega && (
+                      {isProducts && (
                         <ChevronDown
-                          className={cn(
-                            "size-3.5 opacity-55 transition-transform duration-300",
-                            mega && "rotate-180",
-                          )}
+                          className={cn("size-3.5 transition-transform", mega && "rotate-180")}
                           aria-hidden
                         />
                       )}
@@ -164,18 +131,35 @@ export function SiteHeader() {
           </nav>
 
           <div className="flex items-center gap-2">
-            <Button asChild variant="brand" className="hidden h-11 px-5 sm:inline-flex">
-              <Link to="/contact">
-                Send an Inquiry
-                <ArrowRight
-                  className="transition-transform duration-300 group-hover:translate-x-1"
-                  aria-hidden
-                />
-              </Link>
-            </Button>
+            <a
+              href={telHref(phone)}
+              className="hidden items-center gap-2 rounded-full px-3 py-2 text-sm font-semibold text-ink/80 transition-colors hover:bg-surface hover:text-ink 2xl:inline-flex"
+            >
+              <Phone className="size-4 text-brand-green-deep" aria-hidden />
+              {phone}
+            </a>
+            <a
+              href={waHref(phone)}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Chat on WhatsApp"
+              className="hidden size-11 items-center justify-center rounded-full bg-[#25D366] text-ink transition-transform hover:-translate-y-0.5 sm:inline-flex"
+            >
+              <MessageCircle className="size-5" aria-hidden />
+            </a>
+            <Link
+              to="/contact"
+              className="group hidden h-11 items-center gap-2 rounded-full bg-brand-green-deep px-5 text-sm font-bold text-white shadow-soft transition-colors hover:bg-ink sm:inline-flex"
+            >
+              Send Inquiry
+              <ArrowRight
+                className="size-4 transition-transform group-hover:translate-x-0.5"
+                aria-hidden
+              />
+            </Link>
             <button
               type="button"
-              className="inline-flex size-11 items-center justify-center rounded-full border border-sand-line text-ink transition-colors hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring lg:hidden"
+              className="inline-flex size-11 items-center justify-center rounded-full bg-surface text-ink transition-colors hover:bg-sand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring lg:hidden"
               aria-expanded={open}
               aria-controls="mobile-nav"
               aria-label={open ? "Close menu" : "Open menu"}
@@ -186,43 +170,46 @@ export function SiteHeader() {
           </div>
         </div>
 
-        {/* Products mega panel: every category and division, one hover away. */}
+        {/* Products mega panel, as a card under the bar. */}
         <div
           hidden={!mega}
           onMouseEnter={openMega}
           onMouseLeave={closeMega}
-          className="absolute inset-x-0 top-full hidden border-b border-sand-line bg-background/97 shadow-lift backdrop-blur-xl lg:block"
+          className="absolute inset-x-0 top-full z-10 hidden pt-2 lg:block"
         >
-          <div className="container-site grid gap-10 py-9 lg:grid-cols-12">
+          <div className="grid gap-8 rounded-[1.4rem] border border-ink/[0.07] bg-white p-8 shadow-deep lg:grid-cols-12">
             <div className="lg:col-span-7">
               <p className="eyebrow text-[0.64rem] text-brand-green-deep">Spice Range</p>
-              <ul className="mt-5 grid grid-cols-3 gap-x-6 gap-y-1">
+              <ul className="mt-4 grid grid-cols-2 gap-x-6 gap-y-1">
                 {PRODUCTS.map((p) => (
                   <li key={p.slug}>
                     <Link
                       to="/products/$slug"
                       params={{ slug: p.slug }}
-                      className="group flex items-center justify-between gap-2 rounded-md py-1.5 text-sm text-ink/75 transition-colors hover:text-brand-green-deep focus-visible:text-brand-green-deep focus-visible:outline-none"
+                      className="group flex items-center gap-3 rounded-xl p-1.5 text-sm font-medium text-ink/80 transition-colors hover:bg-surface hover:text-ink"
                     >
-                      {productLabel(p)}
-                      <ArrowRight
-                        className="size-3.5 -translate-x-1 opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100"
-                        aria-hidden
+                      <img
+                        src={p.image}
+                        alt=""
+                        width={1000}
+                        height={1000}
+                        className="size-9 shrink-0 object-contain"
                       />
+                      {productLabel(p)}
                     </Link>
                   </li>
                 ))}
               </ul>
             </div>
-            <div className="lg:col-span-5">
+            <div className="lg:col-span-5 lg:border-l lg:border-sand-line lg:pl-8">
               <p className="eyebrow text-[0.64rem] text-brand-green-deep">Business Divisions</p>
-              <ul className="mt-5 space-y-1">
+              <ul className="mt-4 space-y-1">
                 {DIVISIONS.map((d) => (
                   <li key={d.id}>
                     <Link
                       to="/divisions"
                       hash={d.id}
-                      className="block rounded-lg px-3 py-2 transition-colors hover:bg-surface focus-visible:bg-surface focus-visible:outline-none"
+                      className="block rounded-xl px-3 py-2 transition-colors hover:bg-surface"
                     >
                       <span className="block text-sm font-semibold text-ink">{d.name}</span>
                       <span className="mt-0.5 block text-xs text-muted-foreground">
@@ -232,69 +219,72 @@ export function SiteHeader() {
                   </li>
                 ))}
               </ul>
+              <Link
+                to="/packaging"
+                className="mt-4 flex items-center justify-between rounded-xl bg-ink px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-green-deep"
+              >
+                Packaging options <ArrowRight className="size-4" aria-hidden />
+              </Link>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Mobile sheet */}
-      <div
-        id="mobile-nav"
-        hidden={!open}
-        className="h-[calc(100svh-68px)] overflow-y-auto border-t border-sand-line bg-background lg:hidden"
-      >
-        <nav aria-label="Mobile" className="container-site py-5">
-          <ul className="flex flex-col">
-            {NAV.map((item) => (
-              <li key={item.label} className="border-b border-sand-line/70 last:border-0">
-                <Link
-                  to={item.href}
-                  className="flex items-center justify-between py-4 font-display text-lg font-bold text-ink focus-visible:text-brand-green-deep focus-visible:outline-none"
-                >
-                  {item.label}
-                  <ArrowRight className="size-4 text-brand-green-deep" aria-hidden />
-                </Link>
-              </li>
-            ))}
-          </ul>
-
-          <p className="eyebrow mt-7 text-[0.64rem] text-muted-foreground">Products</p>
-          <ul className="mt-3 flex flex-wrap gap-2">
-            {PRODUCTS.map((p) => (
-              <li key={p.slug}>
-                <Link
-                  to="/products/$slug"
-                  params={{ slug: p.slug }}
-                  className="inline-flex rounded-full border border-sand-line bg-surface px-3 py-1.5 text-xs font-medium text-ink/75"
-                >
-                  {productLabel(p)}
-                </Link>
-              </li>
-            ))}
-          </ul>
-
-          <Button asChild variant="brand" size="xl" className="mt-7 w-full">
-            <Link to="/contact">
-              Send an Inquiry <ArrowRight aria-hidden />
-            </Link>
-          </Button>
-
-          <div className="mt-6 space-y-2 border-t border-sand-line pt-6 text-sm">
-            {CONTACT.phones.map((p) => (
-              <a key={p} href={telHref(p)} className="flex items-center gap-3 py-1 text-ink/75">
-                <Phone className="size-4 text-brand-green-deep" aria-hidden />
-                {p}
+        {/* Mobile sheet, as a card under the bar. */}
+        <div id="mobile-nav" hidden={!open} className="absolute inset-x-0 top-full pt-2 lg:hidden">
+          <nav
+            aria-label="Mobile"
+            className="max-h-[calc(100svh-6rem)] overflow-y-auto rounded-2xl border border-ink/[0.07] bg-white p-4 shadow-deep"
+          >
+            <ul className="grid grid-cols-2 gap-2">
+              {NAV.map((item) => {
+                const active =
+                  item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+                return (
+                  <li key={item.label}>
+                    <Link
+                      to={item.href}
+                      className={cn(
+                        "flex items-center justify-between rounded-xl px-4 py-3.5 text-[0.95rem] font-semibold",
+                        active ? "bg-ink text-white" : "bg-surface text-ink",
+                      )}
+                    >
+                      {item.label}
+                      <ArrowRight className="size-4 opacity-60" aria-hidden />
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+            <div className="mt-4 grid grid-cols-2 gap-2">
+              <a
+                href={telHref(phone)}
+                className="flex items-center justify-center gap-2 rounded-xl border border-sand-line py-3 text-sm font-semibold text-ink"
+              >
+                <Phone className="size-4 text-brand-green-deep" aria-hidden /> Call
               </a>
-            ))}
+              <a
+                href={waHref(phone)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 rounded-xl bg-[#25D366] py-3 text-sm font-semibold text-ink"
+              >
+                <MessageCircle className="size-4" aria-hidden /> WhatsApp
+              </a>
+            </div>
+            <Link
+              to="/contact"
+              className="mt-2 flex items-center justify-center gap-2 rounded-xl bg-brand-green-deep py-3.5 text-sm font-bold text-white"
+            >
+              Send Inquiry <ArrowRight className="size-4" aria-hidden />
+            </Link>
             <a
               href={`mailto:${CONTACT.emails[0]}`}
-              className="flex items-center gap-3 py-1 text-ink/75"
+              className="mt-3 flex items-center justify-center gap-2 py-1 text-sm text-ink/70"
             >
-              <Mail className="size-4 text-brand-green-deep" aria-hidden />
-              {CONTACT.emails[0]}
+              <Mail className="size-4" aria-hidden /> {CONTACT.emails[0]}
             </a>
-          </div>
-        </nav>
+          </nav>
+        </div>
       </div>
     </header>
   );
