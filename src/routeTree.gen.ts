@@ -13,9 +13,11 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DivisionsRouteImport } from './routes/divisions'
+import { Route as ExportsRouteImport } from './routes/exports'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as PackagingRouteImport } from './routes/packaging'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as PrivateLabelingRouteImport } from './routes/private-labeling'
 import { Route as ProductsRouteImport } from './routes/products'
 import { Route as QualityRouteImport } from './routes/quality'
 import { Route as TermsRouteImport } from './routes/terms'
@@ -41,6 +43,11 @@ const DivisionsRoute = DivisionsRouteImport.update({
   path: '/divisions',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ExportsRoute = ExportsRouteImport.update({
+  id: '/exports',
+  path: '/exports',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FaqRoute = FaqRouteImport.update({
   id: '/faq',
   path: '/faq',
@@ -54,6 +61,11 @@ const PackagingRoute = PackagingRouteImport.update({
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivateLabelingRoute = PrivateLabelingRouteImport.update({
+  id: '/private-labeling',
+  path: '/private-labeling',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProductsRoute = ProductsRouteImport.update({
@@ -82,9 +94,11 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/divisions': typeof DivisionsRoute
+  '/exports': typeof ExportsRoute
   '/faq': typeof FaqRoute
   '/packaging': typeof PackagingRoute
   '/privacy': typeof PrivacyRoute
+  '/private-labeling': typeof PrivateLabelingRoute
   '/products': typeof ProductsRoute
   '/quality': typeof QualityRoute
   '/terms': typeof TermsRoute
@@ -95,9 +109,11 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/divisions': typeof DivisionsRoute
+  '/exports': typeof ExportsRoute
   '/faq': typeof FaqRoute
   '/packaging': typeof PackagingRoute
   '/privacy': typeof PrivacyRoute
+  '/private-labeling': typeof PrivateLabelingRoute
   '/products': typeof ProductsRoute
   '/quality': typeof QualityRoute
   '/terms': typeof TermsRoute
@@ -109,9 +125,11 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/divisions': typeof DivisionsRoute
+  '/exports': typeof ExportsRoute
   '/faq': typeof FaqRoute
   '/packaging': typeof PackagingRoute
   '/privacy': typeof PrivacyRoute
+  '/private-labeling': typeof PrivateLabelingRoute
   '/products': typeof ProductsRoute
   '/quality': typeof QualityRoute
   '/terms': typeof TermsRoute
@@ -124,9 +142,11 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/divisions'
+    | '/exports'
     | '/faq'
     | '/packaging'
     | '/privacy'
+    | '/private-labeling'
     | '/products'
     | '/quality'
     | '/terms'
@@ -137,9 +157,11 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/divisions'
+    | '/exports'
     | '/faq'
     | '/packaging'
     | '/privacy'
+    | '/private-labeling'
     | '/products'
     | '/quality'
     | '/terms'
@@ -150,9 +172,11 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/divisions'
+    | '/exports'
     | '/faq'
     | '/packaging'
     | '/privacy'
+    | '/private-labeling'
     | '/products'
     | '/quality'
     | '/terms'
@@ -164,9 +188,11 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
   DivisionsRoute: typeof DivisionsRoute
+  ExportsRoute: typeof ExportsRoute
   FaqRoute: typeof FaqRoute
   PackagingRoute: typeof PackagingRoute
   PrivacyRoute: typeof PrivacyRoute
+  PrivateLabelingRoute: typeof PrivateLabelingRoute
   ProductsRoute: typeof ProductsRoute
   QualityRoute: typeof QualityRoute
   TermsRoute: typeof TermsRoute
@@ -203,6 +229,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DivisionsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/exports': {
+      id: '/exports'
+      path: '/exports'
+      fullPath: '/exports'
+      preLoaderRoute: typeof ExportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/faq': {
       id: '/faq'
       path: '/faq'
@@ -222,6 +255,13 @@ declare module '@tanstack/react-router' {
       path: '/privacy'
       fullPath: '/privacy'
       preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/private-labeling': {
+      id: '/private-labeling'
+      path: '/private-labeling'
+      fullPath: '/private-labeling'
+      preLoaderRoute: typeof PrivateLabelingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/products': {
@@ -260,9 +300,11 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
   DivisionsRoute: DivisionsRoute,
+  ExportsRoute: ExportsRoute,
   FaqRoute: FaqRoute,
   PackagingRoute: PackagingRoute,
   PrivacyRoute: PrivacyRoute,
+  PrivateLabelingRoute: PrivateLabelingRoute,
   ProductsRoute: ProductsRoute,
   QualityRoute: QualityRoute,
   TermsRoute: TermsRoute,

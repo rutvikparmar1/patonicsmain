@@ -362,9 +362,8 @@ export const NAV = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Products", href: "/products" },
-  { label: "Packaging", href: "/packaging" },
-  { label: "Divisions", href: "/divisions" },
-  { label: "Quality", href: "/quality" },
+  { label: "Private Labeling", href: "/private-labeling" },
+  { label: "Exports", href: "/exports" },
   { label: "Contact", href: "/contact" },
 ] as const;
 
