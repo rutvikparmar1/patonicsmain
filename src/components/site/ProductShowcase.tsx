@@ -1,85 +1,180 @@
+import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { PRODUCTS } from "@/lib/site-data";
+import { cn } from "@/lib/utils";
 import { Reveal } from "./Reveal";
 import { Eyebrow } from "./SectionHeading";
 
 /**
- * Home-page product rows: full-bleed halves, image and text swapping sides on
- * each row. One row per spice (the variant-less line); the varieties live on
- * the product page.
+ * The spice stage. Instead of a row per product, one stage that changes
+ * colour and pack as you move through the range: the numbered index on the
+ * left is the selector, the right is the spice itself. Hover previews on
+ * desktop, tap selects everywhere.
  */
-const TINT: Record<string, string> = {
-  chilli: "oklch(0.93 0.05 28)",
-  turmeric: "oklch(0.95 0.07 95)",
-  cumin: "oklch(0.93 0.04 70)",
+const STAGE: Record<string, { from: string; to: string; glow: string }> = {
+  chilli: {
+    from: "oklch(0.44 0.17 27)",
+    to: "oklch(0.22 0.07 22)",
+    glow: "oklch(0.72 0.2 32 / 0.5)",
+  },
+  turmeric: {
+    from: "oklch(0.55 0.13 78)",
+    to: "oklch(0.28 0.06 62)",
+    glow: "oklch(0.88 0.17 92 / 0.5)",
+  },
+  cumin: {
+    from: "oklch(0.42 0.06 62)",
+    to: "oklch(0.2 0.03 55)",
+    glow: "oklch(0.78 0.09 72 / 0.45)",
+  },
 };
 
 export function ProductShowcase() {
   const base = PRODUCTS.filter((p) => !p.variant);
-  const count = (name: string) => PRODUCTS.filter((q) => q.name === name).length;
+  const [i, setI] = useState(0);
+  const p = base[i]!;
+  const s = STAGE[p.group] ?? STAGE["cumin"]!;
+  const family = PRODUCTS.filter((q) => q.name === p.name);
 
   return (
     <section
       id="products"
       aria-labelledby="showcase-title"
-      className="scroll-mt-24 bg-background pt-20 md:pt-28"
+      className="scroll-mt-24 bg-ink py-20 md:py-28"
     >
-      <Reveal className="container-site text-center">
-        <Eyebrow center>Patonics Spices</Eyebrow>
-        <h2 id="showcase-title" className="headline-section mt-4 text-ink">
-          Our Products
-        </h2>
-      </Reveal>
+      <div className="container-site">
+        <Reveal className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div>
+            <Eyebrow invert>The Range</Eyebrow>
+            <h2 id="showcase-title" className="headline-section mt-4 max-w-xl text-white">
+              Our spice range
+            </h2>
+          </div>
+          <Link
+            to="/products"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-green hover:underline"
+          >
+            See all twelve <ArrowRight className="size-4" aria-hidden />
+          </Link>
+        </Reveal>
 
-      <div className="mt-12 md:mt-16">
-        {base.map((p, i) => {
-          const flip = i % 2 === 1;
-          const n = count(p.name);
-          return (
-            <div key={p.slug} className="grid md:grid-cols-2">
-              <div
-                className={`flex items-center justify-center p-8 md:min-h-[440px] ${flip ? "md:order-2" : ""}`}
-                style={{ backgroundColor: TINT[p.group] }}
-              >
-                <img
-                  src={p.image}
-                  alt={p.alt}
-                  width={1000}
-                  height={1000}
-                  loading={i === 0 ? "eager" : "lazy"}
-                  decoding="async"
-                  className="w-full max-w-[340px] object-contain"
-                />
-              </div>
-              <div className="flex items-center justify-center bg-surface px-6 py-14 text-center md:px-12">
-                <Reveal className="max-w-md">
-                  <h3 className="font-display text-[1.6rem] font-bold uppercase tracking-tight text-ink">
-                    {p.name}
-                  </h3>
-                  <p className="mt-4 text-[0.95rem] leading-relaxed text-muted-foreground">
-                    {p.blurb}
-                  </p>
-                  {n > 1 && (
-                    <p className="mt-3 text-sm font-semibold text-brand-green-deep">
-                      Available in {n} varieties
-                    </p>
+        <div className="mt-12 grid overflow-hidden rounded-[2rem] border border-white/10 lg:grid-cols-12">
+          {/* Index */}
+          <ol
+            className="flex gap-2 overflow-x-auto bg-ink-soft p-3 lg:col-span-4 lg:flex-col lg:gap-0 lg:overflow-visible lg:p-0"
+            role="tablist"
+            aria-label="Spices"
+          >
+            {base.map((b, n) => (
+              <li key={b.slug} className="shrink-0 lg:border-b lg:border-white/10 lg:last:border-0">
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={n === i}
+                  aria-controls="spice-stage"
+                  onClick={() => setI(n)}
+                  onMouseEnter={() => setI(n)}
+                  className={cn(
+                    "group flex w-full items-center gap-4 rounded-full px-4 py-2.5 text-left transition-colors lg:rounded-none lg:px-8 lg:py-6",
+                    n === i
+                      ? "bg-white text-ink lg:bg-white/[0.06] lg:text-white"
+                      : "text-white/55 hover:text-white",
                   )}
-                  <Button asChild variant="brand" size="xl" className="mt-7">
-                    <Link to="/products/$slug" params={{ slug: p.slug }}>
-                      View Products
-                      <ArrowRight
-                        className="transition-transform duration-300 group-hover:translate-x-1"
-                        aria-hidden
-                      />
-                    </Link>
-                  </Button>
-                </Reveal>
-              </div>
+                >
+                  <span
+                    className={cn(
+                      "hidden font-display text-sm font-bold tabular-nums lg:block",
+                      n === i ? "text-brand-green" : "text-white/30",
+                    )}
+                  >
+                    0{n + 1}
+                  </span>
+                  <span className="whitespace-nowrap font-display text-[0.95rem] font-bold lg:text-[1.35rem]">
+                    {b.name}
+                  </span>
+                  <ArrowRight
+                    className={cn(
+                      "ml-auto hidden size-5 transition-all lg:block",
+                      n === i ? "translate-x-0 opacity-100" : "-translate-x-2 opacity-0",
+                    )}
+                    aria-hidden
+                  />
+                </button>
+              </li>
+            ))}
+          </ol>
+
+          {/* Stage */}
+          <div
+            id="spice-stage"
+            role="tabpanel"
+            aria-label={p.name}
+            className="relative grid min-h-[520px] items-center gap-6 overflow-hidden p-8 transition-[background] duration-700 md:grid-cols-2 md:p-12 lg:col-span-8"
+            style={{
+              background: `radial-gradient(circle at 70% 45%, ${s.glow}, transparent 60%), linear-gradient(140deg, ${s.from}, ${s.to})`,
+            }}
+          >
+            <span
+              className="pointer-events-none absolute -bottom-6 -left-2 whitespace-nowrap font-display text-[clamp(4rem,11vw,9rem)] font-bold uppercase leading-none tracking-tighter text-white/[0.07]"
+              aria-hidden
+            >
+              {p.name.split(" ")[0]}
+            </span>
+
+            <div key={`t-${p.slug}`} className="animate-rise relative text-white md:order-1">
+              <p className="eyebrow text-[0.62rem] text-white/60">
+                0{i + 1} / 0{base.length}
+              </p>
+              <h3 className="mt-3 font-display text-[clamp(1.9rem,1.4rem+1.8vw,2.8rem)] font-bold uppercase leading-[1.02] tracking-tight">
+                {p.name}
+              </h3>
+              <p className="mt-4 max-w-sm leading-relaxed text-white/80">{p.blurb}</p>
+
+              {family.length > 1 && (
+                <div className="mt-7">
+                  <p className="eyebrow text-[0.6rem] text-white/55">{family.length} varieties</p>
+                  <div className="mt-3 flex gap-2">
+                    {family.map((f) => (
+                      <Link
+                        key={f.slug}
+                        to="/products/$slug"
+                        params={{ slug: f.slug }}
+                        title={f.variant ?? "Regular"}
+                        className="size-14 rounded-xl border border-white/20 bg-white/10 p-1 transition-transform hover:-translate-y-1 hover:border-white"
+                      >
+                        <img
+                          src={f.image}
+                          alt={f.variant ?? "Regular"}
+                          width={1000}
+                          height={1000}
+                          className="size-full object-contain"
+                        />
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <Link
+                to="/products/$slug"
+                params={{ slug: p.slug }}
+                className="mt-8 inline-flex h-12 items-center gap-2 rounded-full bg-white px-6 font-semibold text-ink transition-transform hover:-translate-y-0.5"
+              >
+                Explore {p.name.split(" ")[0]} <ArrowUpRight className="size-4" aria-hidden />
+              </Link>
             </div>
-          );
-        })}
+
+            <img
+              key={`i-${p.slug}`}
+              src={p.image}
+              alt={p.alt}
+              width={1000}
+              height={1000}
+              className="animate-rise relative mx-auto w-full max-w-[360px] object-contain drop-shadow-[0_35px_45px_rgba(0,0,0,0.5)] md:order-2"
+            />
+          </div>
+        </div>
       </div>
     </section>
   );
