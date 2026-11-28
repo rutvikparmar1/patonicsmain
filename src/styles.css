@@ -86,6 +86,9 @@
   --color-sand-line: var(--sand-line);
   --color-gold: var(--gold);
   --color-gold-deep: var(--gold-deep);
+  --color-spice: var(--spice);
+  --color-spice-deep: var(--spice-deep);
+  --color-cream: var(--cream);
 
   /* One family throughout, headings and body alike. */
   --font-display: "Lora", ui-serif, Georgia, serif;
@@ -127,6 +130,12 @@
   /* Harvest accent, used sparingly for numerals and rules */
   --gold: oklch(0.8 0.125 78);
   --gold-deep: oklch(0.58 0.115 70);
+
+  /* Chilli red and a warm cream, for the home page's spice-led sections.
+     spice-deep passes AA behind white text. */
+  --spice: oklch(0.58 0.2 30);
+  --spice-deep: oklch(0.5 0.19 29);
+  --cream: oklch(0.965 0.025 82);
 
   --background: oklch(1 0 0);
   --foreground: var(--ink);

@@ -1,7 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Hero } from "@/components/site/Hero";
-import { RangeTiles, SpiceTicker, Story, WhyPatonics } from "@/components/site/HomeSections";
-import { FaqList, QualityStrip, QuickContact, ReachMap, Team } from "@/components/site/HomeMore";
+import {
+  Categories,
+  ChilliSpotlight,
+  ExportSplit,
+  Featured,
+  LabelCta,
+  LandingHero,
+  ReachContact,
+  StatsBand,
+  StorySection,
+} from "@/components/site/Landing";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -28,16 +36,15 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <main id="main" tabIndex={-1} className="outline-none">
-      <Hero />
-      <SpiceTicker />
-      <Story />
-      <RangeTiles />
-      <QualityStrip />
-      <WhyPatonics />
-      <ReachMap />
-      <Team />
-      <FaqList />
-      <QuickContact />
+      <LandingHero />
+      <Categories />
+      <ChilliSpotlight />
+      <Featured />
+      <ExportSplit />
+      <StorySection />
+      <StatsBand />
+      <ReachContact />
+      <LabelCta />
     </main>
   );
 }

@@ -59,6 +59,9 @@ export function SiteHeader() {
   };
 
   const phone = CONTACT.phones[0] ?? "";
+  // Interior pages open on a dark band, so there the bar starts see-through
+  // with light text. The home page opens on a light hero, so it stays solid.
+  const solid = scrolled || open || pathname === "/";
 
   return (
     <header
@@ -75,9 +78,9 @@ export function SiteHeader() {
           <div
             className={cn(
               "flex items-center justify-between gap-4 rounded-2xl border px-4 transition-all duration-300 sm:px-5 lg:rounded-[1.4rem]",
-              scrolled
-                ? "h-16 border-ink/10 bg-white/85 shadow-lift backdrop-blur-xl"
-                : "h-[72px] border-ink/[0.07] bg-white shadow-soft lg:h-20",
+              solid
+                ? "h-16 border-ink/10 bg-white/90 shadow-lift backdrop-blur-xl"
+                : "h-[72px] border-transparent bg-transparent lg:h-20",
             )}
           >
             <Link
@@ -91,14 +94,19 @@ export function SiteHeader() {
                 width={600}
                 height={416}
                 className={cn(
-                  "w-auto transition-[height] duration-300",
-                  scrolled ? "h-12" : "h-14 xl:h-16",
+                  "w-auto transition-[height,filter] duration-300",
+                  solid ? "h-12" : "h-14 brightness-0 invert xl:h-16",
                 )}
               />
             </Link>
 
             <nav aria-label="Primary" className="hidden lg:block">
-              <ul className="flex items-center gap-0.5 rounded-full bg-surface p-1">
+              <ul
+                className={cn(
+                  "flex items-center gap-0.5 rounded-full p-1 transition-colors duration-300",
+                  solid ? "bg-surface" : "bg-white/10 backdrop-blur-md",
+                )}
+              >
                 {NAV.map((item) => {
                   const active =
                     item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
@@ -116,8 +124,12 @@ export function SiteHeader() {
                         className={cn(
                           "inline-flex items-center gap-1 rounded-full px-3 py-2 text-[0.9rem] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring xl:px-4",
                           active
-                            ? "bg-ink text-white shadow-soft"
-                            : "text-ink/70 hover:bg-white hover:text-ink",
+                            ? solid
+                              ? "bg-ink text-white shadow-soft"
+                              : "bg-white text-ink shadow-soft"
+                            : solid
+                              ? "text-ink/70 hover:bg-white hover:text-ink"
+                              : "text-white/85 hover:bg-white/15 hover:text-white",
                         )}
                       >
                         {item.label}
@@ -137,9 +149,17 @@ export function SiteHeader() {
             <div className="flex items-center gap-2">
               <a
                 href={telHref(phone)}
-                className="hidden items-center gap-2 rounded-full px-3 py-2 text-sm font-semibold text-ink/80 transition-colors hover:bg-surface hover:text-ink 2xl:inline-flex"
+                className={cn(
+                  "hidden items-center gap-2 rounded-full px-3 py-2 text-sm font-semibold transition-colors 2xl:inline-flex",
+                  solid
+                    ? "text-ink/80 hover:bg-surface hover:text-ink"
+                    : "text-white/85 hover:bg-white/15 hover:text-white",
+                )}
               >
-                <Phone className="size-4 text-brand-green-deep" aria-hidden />
+                <Phone
+                  className={cn("size-4", solid ? "text-brand-green-deep" : "text-brand-green")}
+                  aria-hidden
+                />
                 {phone}
               </a>
               <a
@@ -163,7 +183,12 @@ export function SiteHeader() {
               </Link>
               <button
                 type="button"
-                className="inline-flex size-11 items-center justify-center rounded-full bg-surface text-ink transition-colors hover:bg-sand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring lg:hidden"
+                className={cn(
+                  "inline-flex size-11 items-center justify-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring lg:hidden",
+                  solid
+                    ? "bg-surface text-ink hover:bg-sand"
+                    : "bg-white/15 text-white hover:bg-white/25",
+                )}
                 aria-expanded={open}
                 aria-controls="mobile-nav"
                 aria-label={open ? "Close menu" : "Open menu"}
